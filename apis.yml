@@ -25,16 +25,11 @@ created: '2024-12-03'
 modified: '2026-03-16'
 position: Consuming
 description: >-
-  The United States House of Representatives is one of the two chambers of the
-  United States Congress, with the other being the Senate. Its main function is
-  to pass federal legislation, which must then be approved by the Senate before
-  it can become law. The House also has the power to impeach government
-  officials, including the President, and to initiate revenue-related bills.
-  Additionally, the House has oversight responsibilities, such as monitoring the
-  executive branch and investigating issues of national importance. Members of
-  the House are elected by the American people every two years, with each
-  representative serving a term of two years. The House is led by the Speaker of
-  the House, who is elected by the members of the chamber.
+  The United States House of Representatives is one of the two chambers of the United
+  States Congress, with the other being the Senate. Its main function is to pass federal
+  legislation, which must then be approved by the Senate before it can become law.
+  The House also has the power to impeach government officials, including the President,
+  and to initiate revenue-related bills.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
