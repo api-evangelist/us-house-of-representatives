@@ -1,0 +1,377 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Congress.gov API"
+  description: "Library of Congress Congress.gov API v3 providing access to bills, members, committees, nominations, and treaties."
+  tags:
+    - Legislation
+    - Congress
+    - Members
+    - Committees
+    - Federal Government
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      CONGRESS_API_KEY: CONGRESS_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: congress
+      baseUri: https://api.congress.gov/v3
+      description: "Congress.gov API v3"
+      authentication:
+        type: apikey
+        key: api_key
+        value: "{{CONGRESS_API_KEY}}"
+        placement: query
+      resources:
+        - name: bills
+          path: /bill
+          description: "Congressional bills and resolutions"
+          operations:
+            - name: list-bills
+              method: GET
+              description: "List congressional bills"
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results (max 250)"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+                - name: format
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format (json or xml)"
+                - name: fromDateTime
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter from date/time"
+                - name: toDateTime
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to date/time"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-bills-by-congress
+              method: GET
+              description: "List bills for a specific Congress"
+              inputParameters:
+                - name: congress
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Congress number"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-bill
+              method: GET
+              description: "Get details for a specific bill"
+              inputParameters:
+                - name: congress
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Congress number"
+                - name: type
+                  in: path
+                  type: string
+                  required: true
+                  description: "Bill type (hr, s, hjres, etc.)"
+                - name: number
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Bill number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-bill-actions
+              method: GET
+              description: "Get legislative actions for a bill"
+              inputParameters:
+                - name: congress
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Congress number"
+                - name: type
+                  in: path
+                  type: string
+                  required: true
+                  description: "Bill type"
+                - name: number
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Bill number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: members
+          path: /member
+          description: "Members of Congress"
+          operations:
+            - name: list-members
+              method: GET
+              description: "List members of Congress"
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+                - name: currentMember
+                  in: query
+                  type: boolean
+                  required: false
+                  description: "Filter for current members"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-member
+              method: GET
+              description: "Get details for a specific member"
+              inputParameters:
+                - name: bioguideId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Member Bioguide ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-member-sponsored-legislation
+              method: GET
+              description: "Get legislation sponsored by a member"
+              inputParameters:
+                - name: bioguideId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Member Bioguide ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: committees
+          path: /committee
+          description: "Congressional committees"
+          operations:
+            - name: list-committees
+              method: GET
+              description: "List congressional committees"
+              inputParameters:
+                - name: congress
+                  in: path
+                  type: integer
+                  required: true
+                  description: "Congress number"
+                - name: chamber
+                  in: path
+                  type: string
+                  required: true
+                  description: "Chamber (house, senate, joint)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-committee
+              method: GET
+              description: "Get details for a specific committee"
+              inputParameters:
+                - name: chamber
+                  in: path
+                  type: string
+                  required: true
+                  description: "Chamber"
+                - name: systemCode
+                  in: path
+                  type: string
+                  required: true
+                  description: "Committee system code"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8104
+      namespace: congress-rest
+      resources:
+        - path: /v1/bills
+          name: bills
+          description: "Congressional bills"
+          operations:
+            - method: GET
+              name: list-bills
+              description: "List bills across all Congresses"
+              call: "congress.list-bills"
+              with:
+                limit: "rest.limit"
+                offset: "rest.offset"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/members
+          name: members
+          description: "Members of Congress"
+          operations:
+            - method: GET
+              name: list-members
+              description: "List members of Congress"
+              call: "congress.list-members"
+              with:
+                currentMember: "rest.current_member"
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9104
+      namespace: congress-mcp
+      transport: http
+      tools:
+        - name: list-bills
+          description: "List congressional bills from Congress.gov API"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "congress.list-bills"
+          with:
+            limit: "tools.limit"
+            offset: "tools.offset"
+            fromDateTime: "tools.from_date"
+            toDateTime: "tools.to_date"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-bill-details
+          description: "Get detailed information for a specific congressional bill"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "congress.get-bill"
+          with:
+            congress: "tools.congress"
+            type: "tools.bill_type"
+            number: "tools.bill_number"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-bill-actions
+          description: "Get the legislative action history for a congressional bill"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "congress.get-bill-actions"
+          with:
+            congress: "tools.congress"
+            type: "tools.bill_type"
+            number: "tools.bill_number"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-members-of-congress
+          description: "List members of Congress with optional filter for current members"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "congress.list-members"
+          with:
+            currentMember: "tools.current_member"
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-member-details
+          description: "Get detailed information for a specific member of Congress by Bioguide ID"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "congress.get-member"
+          with:
+            bioguideId: "tools.bioguide_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-member-sponsored-legislation
+          description: "Get all legislation sponsored by a specific member of Congress"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "congress.get-member-sponsored-legislation"
+          with:
+            bioguideId: "tools.bioguide_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-committees
+          description: "List congressional committees for a specific Congress and chamber"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "congress.list-committees"
+          with:
+            congress: "tools.congress"
+            chamber: "tools.chamber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-committee-details
+          description: "Get detailed information for a congressional committee"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "congress.get-committee"
+          with:
+            chamber: "tools.chamber"
+            systemCode: "tools.system_code"
+          outputParameters:
+            - type: object
+              mapping: "$."

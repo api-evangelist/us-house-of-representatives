@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/us-house-of-representatives/main/json-schema/congress-gov-bill-schema.json",
+  "title": "Congress.gov Bill",
+  "description": "Schema for a congressional bill from the Congress.gov API v3",
+  "type": "object",
+  "properties": {
+    "congress": {
+      "type": "integer",
+      "description": "Congress number (e.g., 119 for the 119th Congress)"
+    },
+    "type": {
+      "type": "string",
+      "description": "Bill type code",
+      "enum": ["HR", "S", "HJRES", "SJRES", "HCONRES", "SCONRES", "HRES", "SRES"]
+    },
+    "number": {
+      "type": "string",
+      "description": "Bill number within its type"
+    },
+    "title": {
+      "type": "string",
+      "description": "Official title of the bill"
+    },
+    "originChamber": {
+      "type": "string",
+      "description": "Chamber where the bill originated",
+      "enum": ["House", "Senate"]
+    },
+    "originChamberCode": {
+      "type": "string",
+      "description": "Single-letter chamber code",
+      "enum": ["H", "S"]
+    },
+    "introducedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the bill was introduced"
+    },
+    "latestAction": {
+      "type": "object",
+      "description": "Most recent legislative action on the bill",
+      "properties": {
+        "actionDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date of the latest action"
+        },
+        "text": {
+          "type": "string",
+          "description": "Description of the latest action"
+        }
+      }
+    },
+    "sponsors": {
+      "type": "array",
+      "description": "Primary sponsors of the bill",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bioguideId": {
+            "type": "string",
+            "description": "Sponsor's Bioguide ID"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "party": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "district": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "cosponsors": {
+      "type": "object",
+      "description": "Cosponsors data with count and URL",
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "committees": {
+      "type": "object",
+      "description": "Committee referrals with count and URL"
+    },
+    "subjects": {
+      "type": "object",
+      "description": "Legislative subject terms"
+    },
+    "updateDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the bill record was last updated in Congress.gov"
+    },
+    "url": {
+      "type": "string",
+      "description": "API URL for this bill's details"
+    }
+  },
+  "required": ["congress", "type", "number", "title", "introducedDate"]
+}

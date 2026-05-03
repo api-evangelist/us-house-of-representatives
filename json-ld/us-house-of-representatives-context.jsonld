@@ -1,0 +1,68 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "congress": "https://api.congress.gov/ns/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Legislation": "schema:Legislation",
+    "LegislativeBill": "schema:LegislativeBill",
+    "MemberOfCongress": "schema:Person",
+    "CongressionalCommittee": "schema:GovernmentOrganization",
+    "CongressionalChamber": "schema:GovernmentOrganization",
+    "LegislativeAction": "schema:Action",
+
+    "id": "@id",
+    "type": "@type",
+
+    "congress": "congress:congressNumber",
+    "number": "congress:billNumber",
+    "title": "schema:name",
+    "introducedDate": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:date"
+    },
+    "updateDate": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "originChamber": "congress:originatingChamber",
+    "latestAction": "schema:potentialAction",
+    "sponsors": "schema:author",
+    "cosponsors": "congress:cosponsors",
+    "subjects": "schema:about",
+
+    "bioguideId": "congress:bioguideId",
+    "name": "schema:name",
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "state": "schema:addressRegion",
+    "party": "schema:memberOf",
+    "district": "congress:congressionalDistrict",
+    "chamber": "congress:chamber",
+    "officeAddress": "schema:address",
+    "phoneNumber": "schema:telephone",
+    "officialWebsiteUrl": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+
+    "Organization": {
+      "@id": "schema:LegislativeBuilding",
+      "name": "US House of Representatives",
+      "url": "https://www.house.gov",
+      "sameAs": [
+        "https://www.wikidata.org/wiki/Q11701",
+        "https://dbpedia.org/resource/United_States_House_of_Representatives"
+      ]
+    },
+
+    "Congress": {
+      "@id": "schema:GovernmentOrganization",
+      "name": "United States Congress",
+      "url": "https://www.congress.gov",
+      "sameAs": "https://www.wikidata.org/wiki/Q11268"
+    }
+  }
+}

@@ -1,0 +1,222 @@
+vocabulary:
+  name: US House of Representatives Vocabulary
+  description: >-
+    Domain vocabulary for the US Congress covering legislation, legislative process,
+    members, committees, and congressional data concepts.
+  version: '1.0'
+  created: '2026-05-03'
+  modified: '2026-05-03'
+
+domains:
+  - name: Legislation
+    description: Congressional bills and legislative instruments
+    terms:
+      - term: House Bill (HR)
+        definition: >-
+          A bill introduced in the House of Representatives; must pass both
+          chambers and be signed by the President to become law
+        tags:
+          - Legislation
+          - House
+      - term: Senate Bill (S)
+        definition: >-
+          A bill introduced in the Senate; must pass both chambers and be
+          signed by the President to become law
+        tags:
+          - Legislation
+          - Senate
+      - term: Joint Resolution (HJRES/SJRES)
+        definition: >-
+          A legislative vehicle requiring passage by both chambers; used for
+          constitutional amendments, emergency declarations, and temporary measures
+        tags:
+          - Legislation
+      - term: Concurrent Resolution (HCONRES/SCONRES)
+        definition: >-
+          An expression of congressional sentiment requiring passage by both
+          chambers but not requiring the President's signature and not having
+          the force of law
+        tags:
+          - Legislation
+      - term: Simple Resolution (HRES/SRES)
+        definition: >-
+          An expression of the sentiment of a single chamber only;
+          does not require the other chamber's approval or presidential signature
+        tags:
+          - Legislation
+      - term: Introduced
+        definition: >-
+          The first stage of the legislative process when a Member of Congress
+          formally presents a bill for consideration
+        tags:
+          - Legislative Process
+      - term: Referred to Committee
+        definition: >-
+          The process by which a bill is assigned to a standing committee
+          with jurisdiction over the bill's subject matter
+        tags:
+          - Legislative Process
+          - Committees
+      - term: Markup
+        definition: >-
+          A committee session in which members amend and vote on a bill
+          before recommending it to the full chamber
+        tags:
+          - Legislative Process
+          - Committees
+      - term: Floor Vote
+        definition: >-
+          A vote by the full membership of a chamber to pass or reject a bill
+        tags:
+          - Legislative Process
+          - Voting
+      - term: Engrossed Bill
+        definition: >-
+          A bill that has been formally printed after passage by one chamber,
+          incorporating all amendments adopted
+        tags:
+          - Legislative Process
+      - term: Enrolled Bill
+        definition: >-
+          The final version of a bill passed by both chambers in identical form,
+          prepared for presidential action
+        tags:
+          - Legislative Process
+
+  - name: Members and Elections
+    description: Members of Congress and electoral concepts
+    terms:
+      - term: Bioguide ID
+        definition: >-
+          A unique alphanumeric identifier assigned by the Library of Congress
+          to each member of Congress that remains constant across all terms
+        source: Library of Congress
+        tags:
+          - Data Standards
+          - Members
+      - term: Representative
+        definition: >-
+          A member of the House of Representatives, elected by voters in a
+          congressional district to a two-year term
+        tags:
+          - Members
+          - House
+      - term: Senator
+        definition: >-
+          A member of the Senate, elected statewide to a six-year term;
+          each state has two Senators
+        tags:
+          - Members
+          - Senate
+      - term: Delegate
+        definition: >-
+          A non-voting representative in Congress from Washington D.C.,
+          Puerto Rico, Guam, U.S. Virgin Islands, American Samoa, or
+          the Northern Mariana Islands
+        tags:
+          - Members
+          - House
+      - term: Sponsor
+        definition: >-
+          The member of Congress who introduces a bill and takes primary
+          responsibility for its passage
+        tags:
+          - Members
+          - Legislation
+      - term: Cosponsor
+        definition: >-
+          A member who signs onto a bill as a co-introducer to show support,
+          though the original sponsor retains primary responsibility
+        tags:
+          - Members
+          - Legislation
+
+  - name: Committees
+    description: Congressional committee concepts
+    terms:
+      - term: Standing Committee
+        definition: >-
+          A permanent congressional committee with continuing jurisdiction
+          over a subject area, responsible for initial consideration of bills
+        tags:
+          - Committees
+      - term: Select Committee
+        definition: >-
+          A temporary congressional committee created for a specific purpose
+          or investigation
+        tags:
+          - Committees
+      - term: Joint Committee
+        definition: >-
+          A committee with members from both the House and Senate serving together
+        tags:
+          - Committees
+      - term: Subcommittee
+        definition: >-
+          A subdivision of a standing committee with specialized jurisdiction
+          over a narrower subject area
+        tags:
+          - Committees
+      - term: System Code
+        definition: >-
+          A unique identifier assigned to each committee in the Congress.gov
+          system (e.g., HSAP for House Appropriations)
+        source: Congress.gov
+        tags:
+          - Data Standards
+          - Committees
+
+  - name: Congressional Data
+    description: Congressional data and API concepts
+    terms:
+      - term: Congress.gov API
+        definition: >-
+          The official REST API maintained by the Library of Congress providing
+          machine-readable access to congressional data in JSON or XML format
+        source: Library of Congress
+        tags:
+          - API
+          - Data
+      - term: Congressional Record
+        definition: >-
+          The official daily record of the proceedings of the US Congress,
+          including floor speeches, votes, and actions taken
+        tags:
+          - Primary Sources
+          - Legislative Process
+      - term: api.data.gov
+        definition: >-
+          GSA's shared API key management infrastructure used by Congress.gov
+          and other federal agency APIs
+        source: GSA
+        tags:
+          - API
+          - Infrastructure
+
+api_properties:
+  bill_types:
+    - "HR: House Bill"
+    - "S: Senate Bill"
+    - "HJRES: House Joint Resolution"
+    - "SJRES: Senate Joint Resolution"
+    - "HCONRES: House Concurrent Resolution"
+    - "SCONRES: Senate Concurrent Resolution"
+    - "HRES: House Simple Resolution"
+    - "SRES: Senate Simple Resolution"
+
+  chambers:
+    - House of Representatives
+    - Senate
+    - Joint
+
+  response_formats:
+    - JSON
+    - XML
+
+  authentication:
+    - API Key (via api.data.gov)
+
+  rate_limits:
+    requests_per_hour: 5000
+    max_results_per_request: 250
+    default_results_per_request: 20

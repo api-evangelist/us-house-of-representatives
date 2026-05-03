@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/us-house-of-representatives/main/json-schema/congress-gov-member-schema.json",
+  "title": "Congress.gov Member",
+  "description": "Schema for a member of Congress from the Congress.gov API v3",
+  "type": "object",
+  "properties": {
+    "bioguideId": {
+      "type": "string",
+      "description": "The Bioguide identifier uniquely identifying this member across all Congresses"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name (Last, First M.)"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "First name"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Last name"
+    },
+    "state": {
+      "type": "string",
+      "description": "Two-letter state abbreviation represented"
+    },
+    "party": {
+      "type": "string",
+      "description": "Party affiliation (R, D, I, etc.)"
+    },
+    "chamber": {
+      "type": "string",
+      "description": "Current chamber",
+      "enum": ["House", "Senate"]
+    },
+    "district": {
+      "type": ["integer", "null"],
+      "description": "Congressional district number (House members only)"
+    },
+    "birthYear": {
+      "type": "string",
+      "description": "Year of birth"
+    },
+    "deathYear": {
+      "type": ["string", "null"],
+      "description": "Year of death (null if living)"
+    },
+    "currentMember": {
+      "type": "boolean",
+      "description": "Whether this member is currently serving"
+    },
+    "terms": {
+      "type": "array",
+      "description": "All terms of Congressional service",
+      "items": {
+        "type": "object",
+        "properties": {
+          "congress": {
+            "type": "integer",
+            "description": "Congress number served"
+          },
+          "chamber": {
+            "type": "string",
+            "description": "Chamber served"
+          },
+          "memberType": {
+            "type": "string",
+            "description": "Type: Senator, Representative, Delegate, Resident Commissioner"
+          },
+          "startYear": {
+            "type": "string",
+            "description": "Year term began"
+          },
+          "endYear": {
+            "type": "string",
+            "description": "Year term ended"
+          },
+          "stateCode": {
+            "type": "string",
+            "description": "Two-letter state code"
+          },
+          "stateName": {
+            "type": "string",
+            "description": "Full state name"
+          },
+          "district": {
+            "type": ["integer", "null"],
+            "description": "Congressional district number"
+          },
+          "partyName": {
+            "type": "string",
+            "description": "Full party name"
+          }
+        }
+      }
+    },
+    "officeAddress": {
+      "type": ["string", "null"],
+      "description": "Congressional office address"
+    },
+    "phoneNumber": {
+      "type": ["string", "null"],
+      "description": "Congressional office phone number"
+    },
+    "officialWebsiteUrl": {
+      "type": ["string", "null"],
+      "description": "Official congressional website URL"
+    },
+    "sponsoredLegislation": {
+      "type": "object",
+      "description": "Count and URL for sponsored legislation",
+      "properties": {
+        "count": {"type": "integer"},
+        "url": {"type": "string"}
+      }
+    },
+    "cosponsoredLegislation": {
+      "type": "object",
+      "description": "Count and URL for cosponsored legislation",
+      "properties": {
+        "count": {"type": "integer"},
+        "url": {"type": "string"}
+      }
+    },
+    "updateDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this member record was last updated"
+    }
+  },
+  "required": ["bioguideId", "name", "state", "currentMember"]
+}

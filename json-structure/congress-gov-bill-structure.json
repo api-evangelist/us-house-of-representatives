@@ -1,0 +1,53 @@
+{
+  "title": "Congress.gov Bill Structure",
+  "description": "Field documentation for congressional bills from the Congress.gov API v3",
+  "type": "object",
+  "fields": [
+    {"name": "congress", "type": "integer", "required": true, "description": "Congress number (e.g., 119 for 119th Congress, 2025-2027)", "example": 119},
+    {"name": "type", "type": "string", "required": true, "description": "Bill type: HR=House Bill, S=Senate Bill, HJRES=House Joint Resolution, SJRES=Senate Joint Resolution, HCONRES=House Concurrent Resolution, SCONRES=Senate Concurrent Resolution, HRES=House Simple Resolution, SRES=Senate Simple Resolution", "example": "HR"},
+    {"name": "number", "type": "string", "required": true, "description": "Bill number within its type and Congress", "example": "1234"},
+    {"name": "title", "type": "string", "required": true, "description": "Official title of the bill as introduced", "example": "To amend the Internal Revenue Code..."},
+    {"name": "originChamber", "type": "string", "required": false, "description": "Chamber where the bill was introduced: House or Senate", "example": "House"},
+    {"name": "introducedDate", "type": "date", "required": true, "description": "Date the bill was formally introduced in ISO 8601 format", "example": "2026-01-15"},
+    {"name": "latestAction", "type": "object", "required": false, "description": "Most recent action taken on the bill",
+      "subfields": [
+        {"name": "actionDate", "type": "date", "description": "Date of the action"},
+        {"name": "text", "type": "string", "description": "Description of the action taken"}
+      ]
+    },
+    {"name": "sponsors", "type": "array", "required": false, "description": "Members who introduced the bill",
+      "itemStructure": {
+        "bioguideId": "Sponsor's unique Bioguide ID",
+        "firstName": "Sponsor first name",
+        "lastName": "Sponsor last name",
+        "party": "Political party (R, D, I)",
+        "state": "Two-letter state code",
+        "district": "Congressional district number (House only)"
+      }
+    },
+    {"name": "updateDate", "type": "date-time", "required": false, "description": "ISO 8601 timestamp of last update to the bill record in Congress.gov"},
+    {"name": "url", "type": "string", "required": false, "description": "Congress.gov API URL to retrieve full bill details"}
+  ],
+  "bill_types": {
+    "HR": {"chamber": "House", "description": "House Resolution / House Bill"},
+    "S": {"chamber": "Senate", "description": "Senate Bill"},
+    "HJRES": {"chamber": "House", "description": "House Joint Resolution"},
+    "SJRES": {"chamber": "Senate", "description": "Senate Joint Resolution"},
+    "HCONRES": {"chamber": "House", "description": "House Concurrent Resolution"},
+    "SCONRES": {"chamber": "Senate", "description": "Senate Concurrent Resolution"},
+    "HRES": {"chamber": "House", "description": "House Simple Resolution"},
+    "SRES": {"chamber": "Senate", "description": "Senate Simple Resolution"}
+  },
+  "legislative_lifecycle": [
+    "Introduced",
+    "Referred to Committee",
+    "Committee Markup",
+    "Reported from Committee",
+    "Floor Consideration",
+    "Passed Chamber",
+    "Sent to Other Chamber",
+    "Enrolled",
+    "Sent to President",
+    "Signed into Law / Vetoed"
+  ]
+}
