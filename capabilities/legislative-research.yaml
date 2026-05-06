@@ -1,291 +1,486 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "US Congressional Legislative Research"
-  description: >-
-    Workflow capability for legislative research and congressional monitoring.
-    Provides access to congressional bills, member information, committee
-    activities, and legislative actions via the Congress.gov API. Supports
-    policy analysts, journalists, civic tech applications, and advocacy
-    organizations monitoring legislation.
+  label: US Congressional Legislative Research
+  description: Workflow capability for legislative research and congressional monitoring. Provides access to congressional
+    bills, member information, committee activities, and legislative actions via the Congress.gov API. Supports policy analysts,
+    journalists, civic tech applications, and advocacy organizations monitoring legislation.
   tags:
-    - Legislation
-    - Congress
-    - Bills
-    - Members
-    - Committees
-    - Federal Government
-    - Civic Tech
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - Legislation
+  - Congress
+  - Bills
+  - Members
+  - Committees
+  - Federal Government
+  - Civic Tech
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      CONGRESS_API_KEY: CONGRESS_API_KEY
-
+- namespace: env
+  keys:
+    CONGRESS_API_KEY: CONGRESS_API_KEY
 capability:
   consumes:
-    - import: congress
-      location: ./shared/congress-gov-api.yaml
-
+  - type: http
+    namespace: congress
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API v3
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{CONGRESS_API_KEY}}'
+      placement: query
+    resources:
+    - name: bills
+      path: /bill
+      description: Congressional bills and resolutions
+      operations:
+      - name: list-bills
+        method: GET
+        description: List congressional bills
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Number of results (max 250)
+        - name: offset
+          in: query
+          type: integer
+          required: false
+          description: Pagination offset
+        - name: format
+          in: query
+          type: string
+          required: false
+          description: Response format (json or xml)
+        - name: fromDateTime
+          in: query
+          type: string
+          required: false
+          description: Filter from date/time
+        - name: toDateTime
+          in: query
+          type: string
+          required: false
+          description: Filter to date/time
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-bills-by-congress
+        method: GET
+        description: List bills for a specific Congress
+        inputParameters:
+        - name: congress
+          in: path
+          type: integer
+          required: true
+          description: Congress number
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Number of results
+        - name: offset
+          in: query
+          type: integer
+          required: false
+          description: Pagination offset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-bill
+        method: GET
+        description: Get details for a specific bill
+        inputParameters:
+        - name: congress
+          in: path
+          type: integer
+          required: true
+          description: Congress number
+        - name: type
+          in: path
+          type: string
+          required: true
+          description: Bill type (hr, s, hjres, etc.)
+        - name: number
+          in: path
+          type: integer
+          required: true
+          description: Bill number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-bill-actions
+        method: GET
+        description: Get legislative actions for a bill
+        inputParameters:
+        - name: congress
+          in: path
+          type: integer
+          required: true
+          description: Congress number
+        - name: type
+          in: path
+          type: string
+          required: true
+          description: Bill type
+        - name: number
+          in: path
+          type: integer
+          required: true
+          description: Bill number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: members
+      path: /member
+      description: Members of Congress
+      operations:
+      - name: list-members
+        method: GET
+        description: List members of Congress
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Number of results
+        - name: offset
+          in: query
+          type: integer
+          required: false
+          description: Pagination offset
+        - name: currentMember
+          in: query
+          type: boolean
+          required: false
+          description: Filter for current members
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-member
+        method: GET
+        description: Get details for a specific member
+        inputParameters:
+        - name: bioguideId
+          in: path
+          type: string
+          required: true
+          description: Member Bioguide ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-member-sponsored-legislation
+        method: GET
+        description: Get legislation sponsored by a member
+        inputParameters:
+        - name: bioguideId
+          in: path
+          type: string
+          required: true
+          description: Member Bioguide ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: committees
+      path: /committee
+      description: Congressional committees
+      operations:
+      - name: list-committees
+        method: GET
+        description: List congressional committees
+        inputParameters:
+        - name: congress
+          in: path
+          type: integer
+          required: true
+          description: Congress number
+        - name: chamber
+          in: path
+          type: string
+          required: true
+          description: Chamber (house, senate, joint)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-committee
+        method: GET
+        description: Get details for a specific committee
+        inputParameters:
+        - name: chamber
+          in: path
+          type: string
+          required: true
+          description: Chamber
+        - name: systemCode
+          in: path
+          type: string
+          required: true
+          description: Committee system code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: legislative-research-api
-      description: "Unified REST API for US Congressional legislative research and monitoring."
-      resources:
-        - path: /v1/bills
-          name: bills
-          description: "Congressional bills and resolutions"
-          operations:
-            - method: GET
-              name: list-bills
-              description: "List congressional bills with optional date filters"
-              call: "congress.list-bills"
-              with:
-                limit: "rest.limit"
-                offset: "rest.offset"
-                fromDateTime: "rest.from_date"
-                toDateTime: "rest.to_date"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/bills/{congress}/{type}/{number}
-          name: bill
-          description: "Single congressional bill"
-          operations:
-            - method: GET
-              name: get-bill
-              description: "Get details for a specific bill"
-              call: "congress.get-bill"
-              with:
-                congress: "rest.congress"
-                type: "rest.type"
-                number: "rest.number"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/bills/{congress}/{type}/{number}/actions
-          name: bill-actions
-          description: "Legislative actions on a bill"
-          operations:
-            - method: GET
-              name: get-bill-actions
-              description: "Get legislative action history for a bill"
-              call: "congress.get-bill-actions"
-              with:
-                congress: "rest.congress"
-                type: "rest.type"
-                number: "rest.number"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/members
-          name: members
-          description: "Members of Congress"
-          operations:
-            - method: GET
-              name: list-members
-              description: "List current and historical members of Congress"
-              call: "congress.list-members"
-              with:
-                currentMember: "rest.current_member"
-                limit: "rest.limit"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/members/{bioguideId}
-          name: member
-          description: "Single member of Congress"
-          operations:
-            - method: GET
-              name: get-member
-              description: "Get details for a member of Congress"
-              call: "congress.get-member"
-              with:
-                bioguideId: "rest.bioguide_id"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/members/{bioguideId}/sponsored-legislation
-          name: member-sponsored
-          description: "Legislation sponsored by a member"
-          operations:
-            - method: GET
-              name: get-member-sponsored-legislation
-              description: "Get bills sponsored by a member"
-              call: "congress.get-member-sponsored-legislation"
-              with:
-                bioguideId: "rest.bioguide_id"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/committees
-          name: committees
-          description: "Congressional committees"
-          operations:
-            - method: GET
-              name: list-committees
-              description: "List congressional committees"
-              call: "congress.list-committees"
-              with:
-                congress: "rest.congress"
-                chamber: "rest.chamber"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/committees/{chamber}/{systemCode}
-          name: committee
-          description: "Single congressional committee"
-          operations:
-            - method: GET
-              name: get-committee
-              description: "Get committee details"
-              call: "congress.get-committee"
-              with:
-                chamber: "rest.chamber"
-                systemCode: "rest.system_code"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: legislative-research-mcp
-      transport: http
-      description: "MCP server for AI-assisted US Congressional legislative research, bill tracking, and member activity monitoring."
-      tools:
-        - name: search-recent-bills
-          description: >-
-            List recent congressional bills from Congress.gov. Filter by date range
-            to find bills introduced or updated within a specific window.
-            Returns bill number, title, sponsor, and latest action.
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "congress.list-bills"
-          with:
-            limit: "tools.limit"
-            offset: "tools.offset"
-            fromDateTime: "tools.from_date"
-            toDateTime: "tools.to_date"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-bills-by-congress
-          description: >-
-            List all bills introduced in a specific Congress (e.g., 118 or 119).
-            Filter by bill type: hr (House bills), s (Senate bills), hjres, sjres,
-            hconres, sconres, hres, sres.
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "congress.list-bills-by-congress"
-          with:
-            congress: "tools.congress"
-            limit: "tools.limit"
-            offset: "tools.offset"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-bill-details
-          description: >-
-            Get comprehensive details for a specific congressional bill including
-            title, sponsors, cosponsors, committees, subjects, and current status.
-            Specify congress number (e.g., 119), type (hr, s), and bill number.
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "congress.get-bill"
-          with:
-            congress: "tools.congress"
-            type: "tools.bill_type"
-            number: "tools.bill_number"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: track-bill-progress
-          description: >-
-            Get the complete legislative action history for a congressional bill.
-            Shows all actions taken: introduction, committee referrals, markups,
-            floor votes, and presidential action.
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "congress.get-bill-actions"
-          with:
-            congress: "tools.congress"
-            type: "tools.bill_type"
-            number: "tools.bill_number"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: find-member-of-congress
-          description: >-
-            Look up a member of Congress by Bioguide ID. Returns name, state,
-            party, chamber, district, contact info, and service history.
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "congress.get-member"
-          with:
-            bioguideId: "tools.bioguide_id"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-current-members
-          description: >-
-            List current members of the US House of Representatives and Senate.
-            Returns each member's name, state, party, chamber, and district.
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "congress.list-members"
-          with:
-            currentMember: "tools.current_member"
-            limit: "tools.limit"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-member-legislation
-          description: >-
-            Get all bills sponsored by a specific member of Congress.
-            Useful for analyzing a legislator's legislative priorities and activity.
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "congress.get-member-sponsored-legislation"
-          with:
-            bioguideId: "tools.bioguide_id"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-house-committees
-          description: >-
-            List House of Representatives committees for a specific Congress.
-            Returns committee names, system codes, and types for the House chamber.
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "congress.list-committees"
-          with:
-            congress: "tools.congress"
-            chamber: "house"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-committee-details
-          description: >-
-            Get detailed information for a specific congressional committee
-            including subcommittees, bill count, and recent reports.
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "congress.get-committee"
-          with:
-            chamber: "tools.chamber"
-            systemCode: "tools.system_code"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: legislative-research-api
+    description: Unified REST API for US Congressional legislative research and monitoring.
+    resources:
+    - path: /v1/bills
+      name: bills
+      description: Congressional bills and resolutions
+      operations:
+      - method: GET
+        name: list-bills
+        description: List congressional bills with optional date filters
+        call: congress.list-bills
+        with:
+          limit: rest.limit
+          offset: rest.offset
+          fromDateTime: rest.from_date
+          toDateTime: rest.to_date
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bills/{congress}/{type}/{number}
+      name: bill
+      description: Single congressional bill
+      operations:
+      - method: GET
+        name: get-bill
+        description: Get details for a specific bill
+        call: congress.get-bill
+        with:
+          congress: rest.congress
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bills/{congress}/{type}/{number}/actions
+      name: bill-actions
+      description: Legislative actions on a bill
+      operations:
+      - method: GET
+        name: get-bill-actions
+        description: Get legislative action history for a bill
+        call: congress.get-bill-actions
+        with:
+          congress: rest.congress
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/members
+      name: members
+      description: Members of Congress
+      operations:
+      - method: GET
+        name: list-members
+        description: List current and historical members of Congress
+        call: congress.list-members
+        with:
+          currentMember: rest.current_member
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/members/{bioguideId}
+      name: member
+      description: Single member of Congress
+      operations:
+      - method: GET
+        name: get-member
+        description: Get details for a member of Congress
+        call: congress.get-member
+        with:
+          bioguideId: rest.bioguide_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/members/{bioguideId}/sponsored-legislation
+      name: member-sponsored
+      description: Legislation sponsored by a member
+      operations:
+      - method: GET
+        name: get-member-sponsored-legislation
+        description: Get bills sponsored by a member
+        call: congress.get-member-sponsored-legislation
+        with:
+          bioguideId: rest.bioguide_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/committees
+      name: committees
+      description: Congressional committees
+      operations:
+      - method: GET
+        name: list-committees
+        description: List congressional committees
+        call: congress.list-committees
+        with:
+          congress: rest.congress
+          chamber: rest.chamber
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/committees/{chamber}/{systemCode}
+      name: committee
+      description: Single congressional committee
+      operations:
+      - method: GET
+        name: get-committee
+        description: Get committee details
+        call: congress.get-committee
+        with:
+          chamber: rest.chamber
+          systemCode: rest.system_code
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: legislative-research-mcp
+    transport: http
+    description: MCP server for AI-assisted US Congressional legislative research, bill tracking, and member activity monitoring.
+    tools:
+    - name: search-recent-bills
+      description: List recent congressional bills from Congress.gov. Filter by date range to find bills introduced or updated
+        within a specific window. Returns bill number, title, sponsor, and latest action.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: congress.list-bills
+      with:
+        limit: tools.limit
+        offset: tools.offset
+        fromDateTime: tools.from_date
+        toDateTime: tools.to_date
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills-by-congress
+      description: 'List all bills introduced in a specific Congress (e.g., 118 or 119). Filter by bill type: hr (House bills),
+        s (Senate bills), hjres, sjres, hconres, sconres, hres, sres.'
+      hints:
+        readOnly: true
+        openWorld: true
+      call: congress.list-bills-by-congress
+      with:
+        congress: tools.congress
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-details
+      description: Get comprehensive details for a specific congressional bill including title, sponsors, cosponsors, committees,
+        subjects, and current status. Specify congress number (e.g., 119), type (hr, s), and bill number.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: congress.get-bill
+      with:
+        congress: tools.congress
+        type: tools.bill_type
+        number: tools.bill_number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: track-bill-progress
+      description: 'Get the complete legislative action history for a congressional bill. Shows all actions taken: introduction,
+        committee referrals, markups, floor votes, and presidential action.'
+      hints:
+        readOnly: true
+        openWorld: false
+      call: congress.get-bill-actions
+      with:
+        congress: tools.congress
+        type: tools.bill_type
+        number: tools.bill_number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-member-of-congress
+      description: Look up a member of Congress by Bioguide ID. Returns name, state, party, chamber, district, contact info,
+        and service history.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: congress.get-member
+      with:
+        bioguideId: tools.bioguide_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-current-members
+      description: List current members of the US House of Representatives and Senate. Returns each member's name, state,
+        party, chamber, and district.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: congress.list-members
+      with:
+        currentMember: tools.current_member
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-member-legislation
+      description: Get all bills sponsored by a specific member of Congress. Useful for analyzing a legislator's legislative
+        priorities and activity.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: congress.get-member-sponsored-legislation
+      with:
+        bioguideId: tools.bioguide_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-house-committees
+      description: List House of Representatives committees for a specific Congress. Returns committee names, system codes,
+        and types for the House chamber.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: congress.list-committees
+      with:
+        congress: tools.congress
+        chamber: house
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-committee-details
+      description: Get detailed information for a specific congressional committee including subcommittees, bill count, and
+        recent reports.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: congress.get-committee
+      with:
+        chamber: tools.chamber
+        systemCode: tools.system_code
+      outputParameters:
+      - type: object
+        mapping: $.
