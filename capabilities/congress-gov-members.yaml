@@ -1,0 +1,260 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Congress.gov API — Members
+  description: 'Congress.gov API — Members. 5 operations. Lead operation: List Members of Congress. Self-contained Naftiko
+    capability covering one Us House Of Representatives business surface.'
+  tags:
+  - Us House Of Representatives
+  - Members
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_HOUSE_OF_REPRESENTATIVES_API_KEY: US_HOUSE_OF_REPRESENTATIVES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: congress-gov-members
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API — Members business capability. Self-contained, no shared references.
+    resources:
+    - name: member
+      path: /member
+      operations:
+      - name: listmembers
+        method: GET
+        description: List Members of Congress
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: currentMember
+          in: query
+          type: boolean
+          description: Filter for current members only
+        - name: fromDateTime
+          in: query
+          type: string
+          description: Start date filter for member updates
+        - name: toDateTime
+          in: query
+          type: string
+          description: End date filter for member updates
+    - name: member-congress-congress
+      path: /member/congress/{congress}
+      operations:
+      - name: listmembersbycongress
+        method: GET
+        description: List Members by Congress
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: currentMember
+          in: query
+          type: boolean
+          description: Filter for current members only
+    - name: member-bioguideId
+      path: /member/{bioguideId}
+      operations:
+      - name: getmember
+        method: GET
+        description: Get Member Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bioguideId
+          in: path
+          type: string
+          description: The Bioguide ID of the member
+          required: true
+    - name: member-bioguideId-cosponsored-legislation
+      path: /member/{bioguideId}/cosponsored-legislation
+      operations:
+      - name: getmembercosponsoredlegislation
+        method: GET
+        description: Get Member Cosponsored Legislation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bioguideId
+          in: path
+          type: string
+          description: The Bioguide ID of the member
+          required: true
+    - name: member-bioguideId-sponsored-legislation
+      path: /member/{bioguideId}/sponsored-legislation
+      operations:
+      - name: getmembersponsoredlegislation
+        method: GET
+        description: Get Member Sponsored Legislation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bioguideId
+          in: path
+          type: string
+          description: The Bioguide ID of the member
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.US_HOUSE_OF_REPRESENTATIVES_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: congress-gov-members-rest
+    port: 8080
+    description: REST adapter for Congress.gov API — Members. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/member
+      name: member
+      description: REST surface for member.
+      operations:
+      - method: GET
+        name: listmembers
+        description: List Members of Congress
+        call: congress-gov-members.listmembers
+        with:
+          currentMember: rest.currentMember
+          fromDateTime: rest.fromDateTime
+          toDateTime: rest.toDateTime
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/member/congress/{congress}
+      name: member-congress-congress
+      description: REST surface for member-congress-congress.
+      operations:
+      - method: GET
+        name: listmembersbycongress
+        description: List Members by Congress
+        call: congress-gov-members.listmembersbycongress
+        with:
+          currentMember: rest.currentMember
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/member/{bioguideid}
+      name: member-bioguideid
+      description: REST surface for member-bioguideId.
+      operations:
+      - method: GET
+        name: getmember
+        description: Get Member Details
+        call: congress-gov-members.getmember
+        with:
+          bioguideId: rest.bioguideId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/member/{bioguideid}/cosponsored-legislation
+      name: member-bioguideid-cosponsored-legislation
+      description: REST surface for member-bioguideId-cosponsored-legislation.
+      operations:
+      - method: GET
+        name: getmembercosponsoredlegislation
+        description: Get Member Cosponsored Legislation
+        call: congress-gov-members.getmembercosponsoredlegislation
+        with:
+          bioguideId: rest.bioguideId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/member/{bioguideid}/sponsored-legislation
+      name: member-bioguideid-sponsored-legislation
+      description: REST surface for member-bioguideId-sponsored-legislation.
+      operations:
+      - method: GET
+        name: getmembersponsoredlegislation
+        description: Get Member Sponsored Legislation
+        call: congress-gov-members.getmembersponsoredlegislation
+        with:
+          bioguideId: rest.bioguideId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: congress-gov-members-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Congress.gov API — Members. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-members-congress
+      description: List Members of Congress
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-members.listmembers
+      with:
+        currentMember: tools.currentMember
+        fromDateTime: tools.fromDateTime
+        toDateTime: tools.toDateTime
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-members-congress-2
+      description: List Members by Congress
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-members.listmembersbycongress
+      with:
+        currentMember: tools.currentMember
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-member-details
+      description: Get Member Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-members.getmember
+      with:
+        bioguideId: tools.bioguideId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-member-cosponsored-legislation
+      description: Get Member Cosponsored Legislation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-members.getmembercosponsoredlegislation
+      with:
+        bioguideId: tools.bioguideId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-member-sponsored-legislation
+      description: Get Member Sponsored Legislation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-members.getmembersponsoredlegislation
+      with:
+        bioguideId: tools.bioguideId
+      outputParameters:
+      - type: object
+        mapping: $.

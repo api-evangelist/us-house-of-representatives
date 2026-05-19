@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Congress.gov API — Nominations
+  description: 'Congress.gov API — Nominations. 1 operations. Lead operation: List Presidential Nominations. Self-contained
+    Naftiko capability covering one Us House Of Representatives business surface.'
+  tags:
+  - Us House Of Representatives
+  - Nominations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_HOUSE_OF_REPRESENTATIVES_API_KEY: US_HOUSE_OF_REPRESENTATIVES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: congress-gov-nominations
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API — Nominations business capability. Self-contained, no shared references.
+    resources:
+    - name: nomination
+      path: /nomination
+      operations:
+      - name: listnominations
+        method: GET
+        description: List Presidential Nominations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.US_HOUSE_OF_REPRESENTATIVES_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: congress-gov-nominations-rest
+    port: 8080
+    description: REST adapter for Congress.gov API — Nominations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/nomination
+      name: nomination
+      description: REST surface for nomination.
+      operations:
+      - method: GET
+        name: listnominations
+        description: List Presidential Nominations
+        call: congress-gov-nominations.listnominations
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: congress-gov-nominations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Congress.gov API — Nominations. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-presidential-nominations
+      description: List Presidential Nominations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-nominations.listnominations
+      outputParameters:
+      - type: object
+        mapping: $.

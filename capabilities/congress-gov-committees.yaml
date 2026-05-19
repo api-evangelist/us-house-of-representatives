@@ -1,0 +1,225 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Congress.gov API — Committees
+  description: 'Congress.gov API — Committees. 4 operations. Lead operation: Get Committee Details. Self-contained Naftiko
+    capability covering one Us House Of Representatives business surface.'
+  tags:
+  - Us House Of Representatives
+  - Committees
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_HOUSE_OF_REPRESENTATIVES_API_KEY: US_HOUSE_OF_REPRESENTATIVES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: congress-gov-committees
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API — Committees business capability. Self-contained, no shared references.
+    resources:
+    - name: committee-chamber-systemCode
+      path: /committee/{chamber}/{systemCode}
+      operations:
+      - name: getcommittee
+        method: GET
+        description: Get Committee Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chamber
+          in: path
+          type: string
+          description: Chamber (house or senate)
+          required: true
+        - name: systemCode
+          in: path
+          type: string
+          description: Unique committee system code
+          required: true
+    - name: committee-chamber-systemCode-bills
+      path: /committee/{chamber}/{systemCode}/bills
+      operations:
+      - name: getcommitteebills
+        method: GET
+        description: Get Committee Bills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chamber
+          in: path
+          type: string
+          required: true
+        - name: systemCode
+          in: path
+          type: string
+          required: true
+    - name: committee-chamber-systemCode-reports
+      path: /committee/{chamber}/{systemCode}/reports
+      operations:
+      - name: getcommitteereports
+        method: GET
+        description: Get Committee Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chamber
+          in: path
+          type: string
+          required: true
+        - name: systemCode
+          in: path
+          type: string
+          required: true
+    - name: committee-congress-chamber
+      path: /committee/{congress}/{chamber}
+      operations:
+      - name: listcommittees
+        method: GET
+        description: List Committees
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chamber
+          in: path
+          type: string
+          description: Chamber (House, Senate, or Joint)
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.US_HOUSE_OF_REPRESENTATIVES_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: congress-gov-committees-rest
+    port: 8080
+    description: REST adapter for Congress.gov API — Committees. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/committee/{chamber}/{systemcode}
+      name: committee-chamber-systemcode
+      description: REST surface for committee-chamber-systemCode.
+      operations:
+      - method: GET
+        name: getcommittee
+        description: Get Committee Details
+        call: congress-gov-committees.getcommittee
+        with:
+          chamber: rest.chamber
+          systemCode: rest.systemCode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/committee/{chamber}/{systemcode}/bills
+      name: committee-chamber-systemcode-bills
+      description: REST surface for committee-chamber-systemCode-bills.
+      operations:
+      - method: GET
+        name: getcommitteebills
+        description: Get Committee Bills
+        call: congress-gov-committees.getcommitteebills
+        with:
+          chamber: rest.chamber
+          systemCode: rest.systemCode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/committee/{chamber}/{systemcode}/reports
+      name: committee-chamber-systemcode-reports
+      description: REST surface for committee-chamber-systemCode-reports.
+      operations:
+      - method: GET
+        name: getcommitteereports
+        description: Get Committee Reports
+        call: congress-gov-committees.getcommitteereports
+        with:
+          chamber: rest.chamber
+          systemCode: rest.systemCode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/committee/{congress}/{chamber}
+      name: committee-congress-chamber
+      description: REST surface for committee-congress-chamber.
+      operations:
+      - method: GET
+        name: listcommittees
+        description: List Committees
+        call: congress-gov-committees.listcommittees
+        with:
+          chamber: rest.chamber
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: congress-gov-committees-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Congress.gov API — Committees. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-committee-details
+      description: Get Committee Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-committees.getcommittee
+      with:
+        chamber: tools.chamber
+        systemCode: tools.systemCode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-committee-bills
+      description: Get Committee Bills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-committees.getcommitteebills
+      with:
+        chamber: tools.chamber
+        systemCode: tools.systemCode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-committee-reports
+      description: Get Committee Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-committees.getcommitteereports
+      with:
+        chamber: tools.chamber
+        systemCode: tools.systemCode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-committees
+      description: List Committees
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-committees.listcommittees
+      with:
+        chamber: tools.chamber
+      outputParameters:
+      - type: object
+        mapping: $.

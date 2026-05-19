@@ -1,0 +1,415 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Congress.gov API — Bills
+  description: 'Congress.gov API — Bills. 8 operations. Lead operation: List Bills. Self-contained Naftiko capability covering
+    one Us House Of Representatives business surface.'
+  tags:
+  - Us House Of Representatives
+  - Bills
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_HOUSE_OF_REPRESENTATIVES_API_KEY: US_HOUSE_OF_REPRESENTATIVES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: congress-gov-bills
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API — Bills business capability. Self-contained, no shared references.
+    resources:
+    - name: bill
+      path: /bill
+      operations:
+      - name: listbills
+        method: GET
+        description: List Bills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fromDateTime
+          in: query
+          type: string
+          description: Start date/time filter for bill updates (ISO 8601)
+        - name: toDateTime
+          in: query
+          type: string
+          description: End date/time filter for bill updates (ISO 8601)
+        - name: sort
+          in: query
+          type: string
+          description: Sort order for results
+    - name: bill-congress
+      path: /bill/{congress}
+      operations:
+      - name: listbillsbycongress
+        method: GET
+        description: List Bills by Congress
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: billType
+          in: query
+          type: string
+          description: Filter by bill type
+    - name: bill-congress-type
+      path: /bill/{congress}/{type}
+      operations:
+      - name: listbillsbytype
+        method: GET
+        description: List Bills by Congress and Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          description: Bill type (e.g., hr, s, hjres)
+          required: true
+    - name: bill-congress-type-number
+      path: /bill/{congress}/{type}/{number}
+      operations:
+      - name: getbill
+        method: GET
+        description: Get Bill Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          description: Bill type (e.g., hr, s)
+          required: true
+        - name: number
+          in: path
+          type: integer
+          description: Bill number
+          required: true
+    - name: bill-congress-type-number-actions
+      path: /bill/{congress}/{type}/{number}/actions
+      operations:
+      - name: getbillactions
+        method: GET
+        description: Get Bill Actions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          description: Bill type
+          required: true
+        - name: number
+          in: path
+          type: integer
+          description: Bill number
+          required: true
+    - name: bill-congress-type-number-cosponsors
+      path: /bill/{congress}/{type}/{number}/cosponsors
+      operations:
+      - name: getbillcosponsors
+        method: GET
+        description: Get Bill Cosponsors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: number
+          in: path
+          type: integer
+          required: true
+    - name: bill-congress-type-number-summaries
+      path: /bill/{congress}/{type}/{number}/summaries
+      operations:
+      - name: getbillsummaries
+        method: GET
+        description: Get Bill Summaries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: number
+          in: path
+          type: integer
+          required: true
+    - name: bill-congress-type-number-text
+      path: /bill/{congress}/{type}/{number}/text
+      operations:
+      - name: getbilltext
+        method: GET
+        description: Get Bill Text Versions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: number
+          in: path
+          type: integer
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.US_HOUSE_OF_REPRESENTATIVES_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: congress-gov-bills-rest
+    port: 8080
+    description: REST adapter for Congress.gov API — Bills. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/bill
+      name: bill
+      description: REST surface for bill.
+      operations:
+      - method: GET
+        name: listbills
+        description: List Bills
+        call: congress-gov-bills.listbills
+        with:
+          fromDateTime: rest.fromDateTime
+          toDateTime: rest.toDateTime
+          sort: rest.sort
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}
+      name: bill-congress
+      description: REST surface for bill-congress.
+      operations:
+      - method: GET
+        name: listbillsbycongress
+        description: List Bills by Congress
+        call: congress-gov-bills.listbillsbycongress
+        with:
+          billType: rest.billType
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}
+      name: bill-congress-type
+      description: REST surface for bill-congress-type.
+      operations:
+      - method: GET
+        name: listbillsbytype
+        description: List Bills by Congress and Type
+        call: congress-gov-bills.listbillsbytype
+        with:
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}/{number}
+      name: bill-congress-type-number
+      description: REST surface for bill-congress-type-number.
+      operations:
+      - method: GET
+        name: getbill
+        description: Get Bill Details
+        call: congress-gov-bills.getbill
+        with:
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}/{number}/actions
+      name: bill-congress-type-number-actions
+      description: REST surface for bill-congress-type-number-actions.
+      operations:
+      - method: GET
+        name: getbillactions
+        description: Get Bill Actions
+        call: congress-gov-bills.getbillactions
+        with:
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}/{number}/cosponsors
+      name: bill-congress-type-number-cosponsors
+      description: REST surface for bill-congress-type-number-cosponsors.
+      operations:
+      - method: GET
+        name: getbillcosponsors
+        description: Get Bill Cosponsors
+        call: congress-gov-bills.getbillcosponsors
+        with:
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}/{number}/summaries
+      name: bill-congress-type-number-summaries
+      description: REST surface for bill-congress-type-number-summaries.
+      operations:
+      - method: GET
+        name: getbillsummaries
+        description: Get Bill Summaries
+        call: congress-gov-bills.getbillsummaries
+        with:
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/bill/{congress}/{type}/{number}/text
+      name: bill-congress-type-number-text
+      description: REST surface for bill-congress-type-number-text.
+      operations:
+      - method: GET
+        name: getbilltext
+        description: Get Bill Text Versions
+        call: congress-gov-bills.getbilltext
+        with:
+          type: rest.type
+          number: rest.number
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: congress-gov-bills-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Congress.gov API — Bills. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-bills
+      description: List Bills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.listbills
+      with:
+        fromDateTime: tools.fromDateTime
+        toDateTime: tools.toDateTime
+        sort: tools.sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills-congress
+      description: List Bills by Congress
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.listbillsbycongress
+      with:
+        billType: tools.billType
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills-congress-and-type
+      description: List Bills by Congress and Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.listbillsbytype
+      with:
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-details
+      description: Get Bill Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.getbill
+      with:
+        type: tools.type
+        number: tools.number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-actions
+      description: Get Bill Actions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.getbillactions
+      with:
+        type: tools.type
+        number: tools.number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-cosponsors
+      description: Get Bill Cosponsors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.getbillcosponsors
+      with:
+        type: tools.type
+        number: tools.number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-summaries
+      description: Get Bill Summaries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.getbillsummaries
+      with:
+        type: tools.type
+        number: tools.number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-text-versions
+      description: Get Bill Text Versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-bills.getbilltext
+      with:
+        type: tools.type
+        number: tools.number
+      outputParameters:
+      - type: object
+        mapping: $.

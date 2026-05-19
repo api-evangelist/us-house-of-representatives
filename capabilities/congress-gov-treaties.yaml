@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Congress.gov API — Treaties
+  description: 'Congress.gov API — Treaties. 1 operations. Lead operation: List Treaties. Self-contained Naftiko capability
+    covering one Us House Of Representatives business surface.'
+  tags:
+  - Us House Of Representatives
+  - Treaties
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_HOUSE_OF_REPRESENTATIVES_API_KEY: US_HOUSE_OF_REPRESENTATIVES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: congress-gov-treaties
+    baseUri: https://api.congress.gov/v3
+    description: Congress.gov API — Treaties business capability. Self-contained, no shared references.
+    resources:
+    - name: treaty
+      path: /treaty
+      operations:
+      - name: listtreaties
+        method: GET
+        description: List Treaties
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.US_HOUSE_OF_REPRESENTATIVES_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: congress-gov-treaties-rest
+    port: 8080
+    description: REST adapter for Congress.gov API — Treaties. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/treaty
+      name: treaty
+      description: REST surface for treaty.
+      operations:
+      - method: GET
+        name: listtreaties
+        description: List Treaties
+        call: congress-gov-treaties.listtreaties
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: congress-gov-treaties-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Congress.gov API — Treaties. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-treaties
+      description: List Treaties
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: congress-gov-treaties.listtreaties
+      outputParameters:
+      - type: object
+        mapping: $.
