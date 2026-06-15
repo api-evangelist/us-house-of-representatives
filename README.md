@@ -1,90 +1,78 @@
-# US House of Representatives
+# US House of Representatives (us-house-of-representatives)
 
 The United States House of Representatives is one of the two chambers of the United States Congress, with the other being the Senate. Its main function is to pass federal legislation, which must then be approved by the Senate before it can become law. The House also has the power to impeach government officials, including the President, and to initiate revenue-related bills. Congressional data is made available through the Congress.gov API, a REST API maintained by the Library of Congress that provides access to bills, members, committees, amendments, nominations, and treaties.
 
-**URL:** [https://www.house.gov](https://www.house.gov)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/us-house-of-representatives/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/us-house-of-representatives/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract
 - **Position:** Consuming
 - **Access:** 3rd-Party
 
 ## Tags
 
-`Federal Government` `Legislation` `Congress` `Legislative Data` `Bills` `Members` `Committees`
+- Federal Government
+- Legislation
+- Congress
+- Legislative Data
+- Bills
+- Members
+- Committees
 
 ## Timestamps
 
 - **Created:** 2024-12-03
-- **Modified:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
-| API | Description |
-|-----|-------------|
-| [Congress.gov API](https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/) | Official REST API for congressional data - bills, members, committees, nominations |
-| [ProPublica Congress API](https://projects.propublica.org/api-docs/congress-api/) | Third-party API with voting records, member profiles, and legislative activity |
+### Congress.gov API
 
-## OpenAPI Specifications
+The Congress.gov API (v3) provides programmatic access to congressional data maintained by the Library of Congress. It offers machine-readable data covering bills, amendments, congressional records, committees, members of Congress, nominations, and treaties. An API key is required and can be obtained from api.data.gov. Responses are available in JSON or XML with a rate limit of 5,000 requests per hour and pagination up to 250 results per request.
 
-| Spec | Description |
-|------|-------------|
-| [Congress.gov API](openapi/congress-gov-api-openapi.yml) | OpenAPI 3.0 spec for Congress.gov v3 API |
+- **Human URL:** [https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/](https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/)
 
-## Spectral Rules
+#### Tags
 
-| Ruleset | Description |
-|---------|-------------|
-| [Congress.gov API Rules](rules/congress-gov-api-rules.yml) | Spectral rules for Congress.gov API conventions |
+- Legislation
+- Congress
+- Federal Government
+- Legislative Data
 
-## Naftiko Capabilities
+#### Properties
 
-### Workflow Capabilities
+- [Documentation](https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/)
+- [Git Hub](https://github.com/LibraryOfCongress/api.congress.gov)
+- [Base U R L](https://api.congress.gov/)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-house-of-representatives/refs/heads/main/openapi/congress-gov-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/congress-gov-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/congress-gov-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| Capability | Description |
-|------------|-------------|
-| [Legislative Research](capabilities/legislative-research.yaml) | Congressional bill tracking, member research, and committee monitoring |
+### ProPublica Congress API
 
-### Shared API Definitions
+ProPublica's Congress API provides access to detailed congressional data including member profiles, voting records, bill sponsorship, and committee activity. This third-party API aggregates and enriches congressional data from multiple public sources.
 
-| Shared Definition | Description |
-|-------------------|-------------|
-| [Congress.gov API](capabilities/shared/congress-gov-api.yaml) | Shared definition for Congress.gov API |
+- **Human URL:** [https://projects.propublica.org/api-docs/congress-api/](https://projects.propublica.org/api-docs/congress-api/)
 
-## JSON Schema
+#### Tags
 
-| Schema | Description |
-|--------|-------------|
-| [Bill Schema](json-schema/congress-gov-bill-schema.json) | Schema for congressional bills |
-| [Member Schema](json-schema/congress-gov-member-schema.json) | Schema for members of Congress |
+- Legislation
+- Congress
+- Voting Records
+- Campaign Finance
 
-## JSON Structure
+#### Properties
 
-| Structure | Description |
-|-----------|-------------|
-| [Bill Structure](json-structure/congress-gov-bill-structure.json) | Field documentation for congressional bills |
+- [Documentation](https://projects.propublica.org/api-docs/congress-api/)
+- [Postman Collection](collections/congress-gov-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/congress-gov-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## JSON-LD
+## Common Properties
 
-| Context | Description |
-|---------|-------------|
-| [Congress Context](json-ld/us-house-of-representatives-context.jsonld) | Linked data context for congressional data |
-
-## Examples
-
-| Example | Description |
-|---------|-------------|
-| [List Bills Example](examples/congress-gov-list-bills-example.json) | Example response listing congressional bills |
-
-## Vocabulary
-
-| Vocabulary | Description |
-|------------|-------------|
-| [Congress Vocabulary](vocabulary/us-house-of-representatives-vocabulary.yml) | Domain vocabulary for legislation and congressional process |
+- [LinkedIn](https://www.linkedin.com/company/u-s-house-of-representatives)
+- [Integrations](https://www.loc.gov/apps)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
