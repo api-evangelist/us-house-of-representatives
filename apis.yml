@@ -63,6 +63,12 @@ description: >-
   maintained by the Library of Congress that provides access to bills, members, committees, amendments, nominations, and
   treaties.
 common:
+  - type: VulnerabilityDisclosure
+    url: security/us-house-of-representatives-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/us-house-of-representatives-domain-security.yml
+  - type: Authentication
+    url: authentication/us-house-of-representatives-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/u-s-house-of-representatives
   - type: Integrations

@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/congress-gov-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyQuery
+  type: apiKey
+  in: query
+  parameter: api_key
+  description: API key required for all requests. Register at https://api.congress.gov/sign-up
+    to obtain a key.
+  sources:
+  - openapi/congress-gov-api-openapi.yml
