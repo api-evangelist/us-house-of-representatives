@@ -1,0 +1,204 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/congress-gov-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 19
+  by_action_class:
+    connected: 19
+  by_consequence:
+    read: 19
+  human_in_the_loop_required: 0
+operations:
+- path: /bill
+  method: get
+  operationId: listBills
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}
+  method: get
+  operationId: listBillsByCongress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}
+  method: get
+  operationId: listBillsByType
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}/{number}
+  method: get
+  operationId: getBill
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}/{number}/actions
+  method: get
+  operationId: getBillActions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}/{number}/cosponsors
+  method: get
+  operationId: getBillCosponsors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}/{number}/summaries
+  method: get
+  operationId: getBillSummaries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bill/{congress}/{type}/{number}/text
+  method: get
+  operationId: getBillText
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /member
+  method: get
+  operationId: listMembers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /member/{bioguideId}
+  method: get
+  operationId: getMember
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /member/congress/{congress}
+  method: get
+  operationId: listMembersByCongress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /member/{bioguideId}/sponsored-legislation
+  method: get
+  operationId: getMemberSponsoredLegislation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /member/{bioguideId}/cosponsored-legislation
+  method: get
+  operationId: getMemberCosponsoredLegislation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /committee/{congress}/{chamber}
+  method: get
+  operationId: listCommittees
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /committee/{chamber}/{systemCode}
+  method: get
+  operationId: getCommittee
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /committee/{chamber}/{systemCode}/bills
+  method: get
+  operationId: getCommitteeBills
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /committee/{chamber}/{systemCode}/reports
+  method: get
+  operationId: getCommitteeReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /nomination
+  method: get
+  operationId: listNominations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /treaty
+  method: get
+  operationId: listTreaties
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
