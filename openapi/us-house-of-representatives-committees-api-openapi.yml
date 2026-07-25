@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: Congress.gov Bills Committees API
+  description: The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.
+  version: v3
+  contact:
+    url: https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/
+  license:
+    name: US Government Work
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.congress.gov/v3
+  description: Congress.gov API v3 Production Server
+security:
+- ApiKeyQuery: []
+tags:
+- name: Committees
+  description: Congressional committees
+paths:
+  /committee/{congress}/{chamber}:
+    get:
+      operationId: listCommittees
+      summary: List Committees
+      description: Returns a list of congressional committees for a specific Congress and chamber.
+      tags:
+      - Committees
+      parameters:
+      - $ref: '#/components/parameters/congressParam'
+      - name: chamber
+        in: path
+        description: Chamber (House, Senate, or Joint)
+        required: true
+        schema:
+          type: string
+          enum:
+          - house
+          - senate
+          - joint
+      - $ref: '#/components/parameters/apiKeyParam'
+      - $ref: '#/components/parameters/formatParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of committees
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitteeListResponse'
+  /committee/{chamber}/{systemCode}:
+    get:
+      operationId: getCommittee
+      summary: Get Committee Details
+      description: Returns details for a specific committee by system code.
+      tags:
+      - Committees
+      parameters:
+      - name: chamber
+        in: path
+        description: Chamber (house or senate)
+        required: true
+        schema:
+          type: string
+      - name: systemCode
+        in: path
+        description: Unique committee system code
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiKeyParam'
+      - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: Detailed committee information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitteeDetailResponse'
+        '404':
+          description: Committee not found
+  /committee/{chamber}/{systemCode}/bills:
+    get:
+      operationId: getCommitteeBills
+      summary: Get Committee Bills
+      description: Returns bills referred to a specific committee.
+      tags:
+      - Committees
+      parameters:
+      - name: chamber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: systemCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiKeyParam'
+      - $ref: '#/components/parameters/formatParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Bills referred to the committee
+          content:
+            application/json:
+              schema:
+                type: object
+  /committee/{chamber}/{systemCode}/reports:
+    get:
+      operationId: getCommitteeReports
+      summary: Get Committee Reports
+      description: Returns reports issued by a specific committee.
+      tags:
+      - Committees
+      parameters:
+      - name: chamber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: systemCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiKeyParam'
+      - $ref: '#/components/parameters/formatParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Reports from the committee
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    CommitteeDetailResponse:
+      type: object
+      properties:
+        committee:
+          type: object
+          properties:
+            systemCode:
+              type: string
+            name:
+              type: string
+            chamber:
+              type: string
+            committeeTypeCode:
+              type: string
+            subcommittees:
+              type: array
+              items:
+                type: object
+            reportsCount:
+              type: integer
+            billsCount:
+              type: integer
+    CommitteeListResponse:
+      type: object
+      properties:
+        committees:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitteeSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    CommitteeSummary:
+      type: object
+      properties:
+        systemCode:
+          type: string
+          description: Unique committee system code
+        name:
+          type: string
+          description: Committee name
+        chamber:
+          type: string
+          description: Chamber (House, Senate, or Joint)
+        committeeTypeCode:
+          type: string
+          description: Type of committee
+        url:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
+  parameters:
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key required for all requests. Register at https://api.congress.gov/sign-up to obtain a key.

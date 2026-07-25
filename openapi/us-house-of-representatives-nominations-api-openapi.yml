@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Congress.gov Bills Nominations API
+  description: The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.
+  version: v3
+  contact:
+    url: https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/
+  license:
+    name: US Government Work
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://api.congress.gov/v3
+  description: Congress.gov API v3 Production Server
+security:
+- ApiKeyQuery: []
+tags:
+- name: Nominations
+  description: Presidential nominations
+paths:
+  /nomination:
+    get:
+      operationId: listNominations
+      summary: List Presidential Nominations
+      description: Returns a list of presidential nominations submitted to the Senate.
+      tags:
+      - Nominations
+      parameters:
+      - $ref: '#/components/parameters/apiKeyParam'
+      - $ref: '#/components/parameters/formatParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of nominations
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  parameters:
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key required for all requests. Register at https://api.congress.gov/sign-up to obtain a key.
