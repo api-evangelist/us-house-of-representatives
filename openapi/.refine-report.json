@@ -1,0 +1,22 @@
+{
+  "provider": "us-house-of-representatives",
+  "sources": [
+    "us-house-of-representatives-bills-api-openapi.yml",
+    "us-house-of-representatives-committees-api-openapi.yml",
+    "us-house-of-representatives-members-api-openapi.yml",
+    "us-house-of-representatives-nominations-api-openapi.yml",
+    "us-house-of-representatives-treaties-api-openapi.yml"
+  ],
+  "outputs": [
+    "us-house-of-representatives-bills-api-openapi.yml",
+    "us-house-of-representatives-committees-api-openapi.yml",
+    "us-house-of-representatives-members-api-openapi.yml",
+    "us-house-of-representatives-nominations-api-openapi.yml",
+    "us-house-of-representatives-treaties-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

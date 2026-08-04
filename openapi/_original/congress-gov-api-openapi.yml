@@ -1,0 +1,942 @@
+openapi: 3.0.3
+info:
+  title: Congress.gov API
+  description: >-
+    The Congress.gov API provides programmatic access to congressional data
+    from the Library of Congress. It is a REST API offering machine-readable
+    data covering bills, amendments, congressional records, committees, members,
+    nominations, treaties, and other collections. An API key is required for
+    access. Version 3 is the current stable release.
+  version: v3
+  contact:
+    url: https://www.loc.gov/apis/additional-apis/congress-dot-gov-api/
+  license:
+    name: US Government Work
+    url: https://www.usa.gov/government-works
+servers:
+  - url: https://api.congress.gov/v3
+    description: Congress.gov API v3 Production Server
+tags:
+  - name: Bills
+    description: Legislative bills and resolutions
+  - name: Members
+    description: Members of Congress
+  - name: Committees
+    description: Congressional committees
+  - name: Amendments
+    description: Amendments to bills
+  - name: Congressional Record
+    description: Congressional Record daily editions
+  - name: Nominations
+    description: Presidential nominations
+  - name: Treaties
+    description: International treaties
+security:
+  - ApiKeyQuery: []
+paths:
+  /bill:
+    get:
+      operationId: listBills
+      summary: List Bills
+      description: Returns a paginated list of congressional bills across all congresses.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: fromDateTime
+          in: query
+          description: Start date/time filter for bill updates (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: toDateTime
+          in: query
+          description: End date/time filter for bill updates (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: sort
+          in: query
+          description: Sort order for results
+          required: false
+          schema:
+            type: string
+            enum:
+              - updateDate+asc
+              - updateDate+desc
+            default: updateDate+desc
+      responses:
+        '200':
+          description: A paginated list of bills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillListResponse'
+        '400':
+          description: Bad request
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+  /bill/{congress}:
+    get:
+      operationId: listBillsByCongress
+      summary: List Bills by Congress
+      description: Returns bills introduced in a specific Congress.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: billType
+          in: query
+          description: Filter by bill type
+          required: false
+          schema:
+            type: string
+            enum:
+              - hr
+              - s
+              - hjres
+              - sjres
+              - hconres
+              - sconres
+              - hres
+              - sres
+      responses:
+        '200':
+          description: A paginated list of bills for the specified Congress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillListResponse'
+        '404':
+          description: Congress not found
+  /bill/{congress}/{type}:
+    get:
+      operationId: listBillsByType
+      summary: List Bills by Congress and Type
+      description: Returns bills of a specific type introduced in a specific Congress.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          description: Bill type (e.g., hr, s, hjres)
+          required: true
+          schema:
+            type: string
+            enum:
+              - hr
+              - s
+              - hjres
+              - sjres
+              - hconres
+              - sconres
+              - hres
+              - sres
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: A list of bills of the specified type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillListResponse'
+  /bill/{congress}/{type}/{number}:
+    get:
+      operationId: getBill
+      summary: Get Bill Details
+      description: Returns detailed information for a specific bill.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          description: Bill type (e.g., hr, s)
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: path
+          description: Bill number
+          required: true
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: Detailed bill information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillDetailResponse'
+        '404':
+          description: Bill not found
+  /bill/{congress}/{type}/{number}/actions:
+    get:
+      operationId: getBillActions
+      summary: Get Bill Actions
+      description: Returns the legislative actions taken on a specific bill.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          description: Bill type
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: path
+          description: Bill number
+          required: true
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of actions on the bill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillActionsResponse'
+  /bill/{congress}/{type}/{number}/cosponsors:
+    get:
+      operationId: getBillCosponsors
+      summary: Get Bill Cosponsors
+      description: Returns the cosponsors of a specific bill.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of cosponsors
+          content:
+            application/json:
+              schema:
+                type: object
+  /bill/{congress}/{type}/{number}/summaries:
+    get:
+      operationId: getBillSummaries
+      summary: Get Bill Summaries
+      description: Returns summaries for a specific bill.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: List of summaries for the bill
+          content:
+            application/json:
+              schema:
+                type: object
+  /bill/{congress}/{type}/{number}/text:
+    get:
+      operationId: getBillText
+      summary: Get Bill Text Versions
+      description: Returns the available text versions for a specific bill.
+      tags:
+        - Bills
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: Available text versions of the bill
+          content:
+            application/json:
+              schema:
+                type: object
+  /member:
+    get:
+      operationId: listMembers
+      summary: List Members of Congress
+      description: Returns a paginated list of all members of Congress.
+      tags:
+        - Members
+      parameters:
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: currentMember
+          in: query
+          description: Filter for current members only
+          required: false
+          schema:
+            type: boolean
+        - name: fromDateTime
+          in: query
+          description: Start date filter for member updates
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: toDateTime
+          in: query
+          description: End date filter for member updates
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: A paginated list of members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListResponse'
+  /member/{bioguideId}:
+    get:
+      operationId: getMember
+      summary: Get Member Details
+      description: Returns detailed information for a specific member of Congress.
+      tags:
+        - Members
+      parameters:
+        - name: bioguideId
+          in: path
+          description: The Bioguide ID of the member
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: Detailed member information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberDetailResponse'
+        '404':
+          description: Member not found
+  /member/congress/{congress}:
+    get:
+      operationId: listMembersByCongress
+      summary: List Members by Congress
+      description: Returns members of a specific Congress.
+      tags:
+        - Members
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - name: currentMember
+          in: query
+          description: Filter for current members only
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Members of the specified Congress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListResponse'
+  /member/{bioguideId}/sponsored-legislation:
+    get:
+      operationId: getMemberSponsoredLegislation
+      summary: Get Member Sponsored Legislation
+      description: Returns legislation sponsored by a specific member of Congress.
+      tags:
+        - Members
+      parameters:
+        - name: bioguideId
+          in: path
+          description: The Bioguide ID of the member
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Legislation sponsored by the member
+          content:
+            application/json:
+              schema:
+                type: object
+  /member/{bioguideId}/cosponsored-legislation:
+    get:
+      operationId: getMemberCosponsoredLegislation
+      summary: Get Member Cosponsored Legislation
+      description: Returns legislation cosponsored by a specific member of Congress.
+      tags:
+        - Members
+      parameters:
+        - name: bioguideId
+          in: path
+          description: The Bioguide ID of the member
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Legislation cosponsored by the member
+          content:
+            application/json:
+              schema:
+                type: object
+  /committee/{congress}/{chamber}:
+    get:
+      operationId: listCommittees
+      summary: List Committees
+      description: Returns a list of congressional committees for a specific Congress and chamber.
+      tags:
+        - Committees
+      parameters:
+        - $ref: '#/components/parameters/congressParam'
+        - name: chamber
+          in: path
+          description: Chamber (House, Senate, or Joint)
+          required: true
+          schema:
+            type: string
+            enum:
+              - house
+              - senate
+              - joint
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of committees
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitteeListResponse'
+  /committee/{chamber}/{systemCode}:
+    get:
+      operationId: getCommittee
+      summary: Get Committee Details
+      description: Returns details for a specific committee by system code.
+      tags:
+        - Committees
+      parameters:
+        - name: chamber
+          in: path
+          description: Chamber (house or senate)
+          required: true
+          schema:
+            type: string
+        - name: systemCode
+          in: path
+          description: Unique committee system code
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+      responses:
+        '200':
+          description: Detailed committee information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitteeDetailResponse'
+        '404':
+          description: Committee not found
+  /committee/{chamber}/{systemCode}/bills:
+    get:
+      operationId: getCommitteeBills
+      summary: Get Committee Bills
+      description: Returns bills referred to a specific committee.
+      tags:
+        - Committees
+      parameters:
+        - name: chamber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: systemCode
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Bills referred to the committee
+          content:
+            application/json:
+              schema:
+                type: object
+  /committee/{chamber}/{systemCode}/reports:
+    get:
+      operationId: getCommitteeReports
+      summary: Get Committee Reports
+      description: Returns reports issued by a specific committee.
+      tags:
+        - Committees
+      parameters:
+        - name: chamber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: systemCode
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Reports from the committee
+          content:
+            application/json:
+              schema:
+                type: object
+  /nomination:
+    get:
+      operationId: listNominations
+      summary: List Presidential Nominations
+      description: Returns a list of presidential nominations submitted to the Senate.
+      tags:
+        - Nominations
+      parameters:
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of nominations
+          content:
+            application/json:
+              schema:
+                type: object
+  /treaty:
+    get:
+      operationId: listTreaties
+      summary: List Treaties
+      description: Returns a list of treaties submitted to the Senate for ratification.
+      tags:
+        - Treaties
+      parameters:
+        - $ref: '#/components/parameters/apiKeyParam'
+        - $ref: '#/components/parameters/formatParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: List of treaties
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+      description: >-
+        API key required for all requests. Register at
+        https://api.congress.gov/sign-up to obtain a key.
+  parameters:
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+          - json
+          - xml
+        default: json
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: API key missing or invalid
+    RateLimitExceeded:
+      description: Rate limit exceeded (5000 requests per hour)
+  schemas:
+    BillListResponse:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    BillSummary:
+      type: object
+      properties:
+        congress:
+          type: integer
+          description: Congress number the bill was introduced in
+        type:
+          type: string
+          description: Bill type code (hr, s, hjres, etc.)
+        number:
+          type: string
+          description: Bill number
+        title:
+          type: string
+          description: Official title of the bill
+        originChamber:
+          type: string
+          description: Chamber where the bill originated (House or Senate)
+        originChamberCode:
+          type: string
+          description: Chamber code (H or S)
+        introducedDate:
+          type: string
+          format: date
+          description: Date the bill was introduced
+        latestAction:
+          type: object
+          properties:
+            actionDate:
+              type: string
+              format: date
+            text:
+              type: string
+        updateDate:
+          type: string
+          format: date-time
+        url:
+          type: string
+          description: API URL for the bill details
+    BillDetailResponse:
+      type: object
+      properties:
+        bill:
+          type: object
+          properties:
+            congress:
+              type: integer
+            type:
+              type: string
+            number:
+              type: string
+            title:
+              type: string
+            introducedDate:
+              type: string
+              format: date
+            sponsors:
+              type: array
+              items:
+                type: object
+            cosponsors:
+              type: object
+            committees:
+              type: object
+            actions:
+              type: object
+            subjects:
+              type: object
+            summaries:
+              type: object
+            textVersions:
+              type: object
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    BillActionsResponse:
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            type: object
+            properties:
+              actionDate:
+                type: string
+                format: date
+              text:
+                type: string
+              type:
+                type: string
+              actionCode:
+                type: string
+              committees:
+                type: array
+                items:
+                  type: object
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    MemberListResponse:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    MemberSummary:
+      type: object
+      properties:
+        bioguideId:
+          type: string
+          description: Bioguide ID uniquely identifying the member
+        name:
+          type: string
+          description: Full name of the member
+        state:
+          type: string
+          description: State represented
+        party:
+          type: string
+          description: Party affiliation
+        chamber:
+          type: string
+          description: Current chamber (House or Senate)
+        district:
+          type: integer
+          nullable: true
+          description: Congressional district (House members only)
+        updateDate:
+          type: string
+          format: date-time
+        url:
+          type: string
+    MemberDetailResponse:
+      type: object
+      properties:
+        member:
+          type: object
+          properties:
+            bioguideId:
+              type: string
+            name:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            state:
+              type: string
+            party:
+              type: string
+            birthYear:
+              type: string
+            deathYear:
+              type: string
+              nullable: true
+            currentMember:
+              type: boolean
+            terms:
+              type: array
+              items:
+                type: object
+                properties:
+                  congress:
+                    type: integer
+                  chamber:
+                    type: string
+                  memberType:
+                    type: string
+                  startYear:
+                    type: string
+                  endYear:
+                    type: string
+                  stateCode:
+                    type: string
+                  stateName:
+                    type: string
+                  district:
+                    type: integer
+            officeAddress:
+              type: string
+            phoneNumber:
+              type: string
+            officialWebsiteUrl:
+              type: string
+            sponsoredLegislation:
+              type: object
+            cosponsoredLegislation:
+              type: object
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    CommitteeListResponse:
+      type: object
+      properties:
+        committees:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitteeSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    CommitteeSummary:
+      type: object
+      properties:
+        systemCode:
+          type: string
+          description: Unique committee system code
+        name:
+          type: string
+          description: Committee name
+        chamber:
+          type: string
+          description: Chamber (House, Senate, or Joint)
+        committeeTypeCode:
+          type: string
+          description: Type of committee
+        url:
+          type: string
+    CommitteeDetailResponse:
+      type: object
+      properties:
+        committee:
+          type: object
+          properties:
+            systemCode:
+              type: string
+            name:
+              type: string
+            chamber:
+              type: string
+            committeeTypeCode:
+              type: string
+            subcommittees:
+              type: array
+              items:
+                type: object
+            reportsCount:
+              type: integer
+            billsCount:
+              type: integer
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
+    RequestInfo:
+      type: object
+      properties:
+        billNumber:
+          type: string
+        billType:
+          type: string
+        congress:
+          type: string
+        contentType:
+          type: string
+        format:
+          type: string
