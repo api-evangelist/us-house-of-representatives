@@ -1,0 +1,165 @@
+{
+  "item": [
+    {
+      "id": "eb254cd1-ac22-4138-b094-29b9e547b92c",
+      "name": "Treaties",
+      "description": {
+        "content": "International treaties",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dac748ae-53e2-401a-815f-2c0e7c697326",
+          "name": "List Treaties",
+          "request": {
+            "name": "List Treaties",
+            "description": {
+              "content": "Returns a list of treaties submitted to the Senate for ratification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "treaty"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "674c1987-a27c-4e80-920b-e8a44eff5e86",
+              "name": "List of treaties",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "treaty"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.congress.gov/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f8c5ce91-e808-4dfb-8a82-1a6a8c4dc828",
+    "name": "Congress.gov Bills Treaties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.",
+      "type": "text/plain"
+    }
+  }
+}

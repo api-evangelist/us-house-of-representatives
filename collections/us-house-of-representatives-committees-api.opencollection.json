@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Congress.gov Bills Committees API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Committees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Committees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/committee/:congress/:chamber",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "chamber",
+                "value": "",
+                "type": "path",
+                "description": "Chamber (House, Senate, or Joint)"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of congressional committees for a specific Congress and chamber."
+        },
+        {
+          "info": {
+            "name": "Get Committee Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/committee/:chamber/:systemCode",
+            "params": [
+              {
+                "name": "chamber",
+                "value": "",
+                "type": "path",
+                "description": "Chamber (house or senate)"
+              },
+              {
+                "name": "systemCode",
+                "value": "",
+                "type": "path",
+                "description": "Unique committee system code"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific committee by system code."
+        },
+        {
+          "info": {
+            "name": "Get Committee Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/committee/:chamber/:systemCode/bills",
+            "params": [
+              {
+                "name": "chamber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "systemCode",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns bills referred to a specific committee."
+        },
+        {
+          "info": {
+            "name": "Get Committee Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/committee/:chamber/:systemCode/reports",
+            "params": [
+              {
+                "name": "chamber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "systemCode",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns reports issued by a specific committee."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

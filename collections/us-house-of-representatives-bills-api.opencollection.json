@@ -1,0 +1,412 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Congress.gov Bills API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              },
+              {
+                "name": "fromDateTime",
+                "value": "",
+                "type": "query",
+                "description": "Start date/time filter for bill updates (ISO 8601)"
+              },
+              {
+                "name": "toDateTime",
+                "value": "",
+                "type": "query",
+                "description": "End date/time filter for bill updates (ISO 8601)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of congressional bills across all congresses."
+        },
+        {
+          "info": {
+            "name": "List Bills by Congress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              },
+              {
+                "name": "billType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by bill type"
+              }
+            ]
+          },
+          "docs": "Returns bills introduced in a specific Congress."
+        },
+        {
+          "info": {
+            "name": "List Bills by Congress and Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Bill type (e.g., hr, s, hjres)"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns bills of a specific type introduced in a specific Congress."
+        },
+        {
+          "info": {
+            "name": "Get Bill Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type/:number",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Bill type (e.g., hr, s)"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "Bill number"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ]
+          },
+          "docs": "Returns detailed information for a specific bill."
+        },
+        {
+          "info": {
+            "name": "Get Bill Actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type/:number/actions",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Bill type"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "Bill number"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns the legislative actions taken on a specific bill."
+        },
+        {
+          "info": {
+            "name": "Get Bill Cosponsors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type/:number/cosponsors",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns the cosponsors of a specific bill."
+        },
+        {
+          "info": {
+            "name": "Get Bill Summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type/:number/summaries",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ]
+          },
+          "docs": "Returns summaries for a specific bill."
+        },
+        {
+          "info": {
+            "name": "Get Bill Text Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/bill/:congress/:type/:number/text",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ]
+          },
+          "docs": "Returns the available text versions for a specific bill."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

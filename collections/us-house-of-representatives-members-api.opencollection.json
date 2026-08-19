@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Congress.gov Bills Members API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Members of Congress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/member",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              },
+              {
+                "name": "currentMember",
+                "value": "",
+                "type": "query",
+                "description": "Filter for current members only"
+              },
+              {
+                "name": "fromDateTime",
+                "value": "",
+                "type": "query",
+                "description": "Start date filter for member updates"
+              },
+              {
+                "name": "toDateTime",
+                "value": "",
+                "type": "query",
+                "description": "End date filter for member updates"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all members of Congress."
+        },
+        {
+          "info": {
+            "name": "Get Member Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/member/:bioguideId",
+            "params": [
+              {
+                "name": "bioguideId",
+                "value": "",
+                "type": "path",
+                "description": "The Bioguide ID of the member"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ]
+          },
+          "docs": "Returns detailed information for a specific member of Congress."
+        },
+        {
+          "info": {
+            "name": "List Members by Congress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/member/congress/:congress",
+            "params": [
+              {
+                "name": "congress",
+                "value": "",
+                "type": "path",
+                "description": "The Congress number (e.g., 118 for the 118th Congress)"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              },
+              {
+                "name": "currentMember",
+                "value": "",
+                "type": "query",
+                "description": "Filter for current members only"
+              }
+            ]
+          },
+          "docs": "Returns members of a specific Congress."
+        },
+        {
+          "info": {
+            "name": "Get Member Sponsored Legislation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/member/:bioguideId/sponsored-legislation",
+            "params": [
+              {
+                "name": "bioguideId",
+                "value": "",
+                "type": "path",
+                "description": "The Bioguide ID of the member"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns legislation sponsored by a specific member of Congress."
+        },
+        {
+          "info": {
+            "name": "Get Member Cosponsored Legislation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/member/:bioguideId/cosponsored-legislation",
+            "params": [
+              {
+                "name": "bioguideId",
+                "value": "",
+                "type": "path",
+                "description": "The Bioguide ID of the member"
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns legislation cosponsored by a specific member of Congress."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

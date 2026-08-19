@@ -1,0 +1,778 @@
+{
+  "item": [
+    {
+      "id": "a93fb046-8cae-4564-ba25-9d1d2cf555f1",
+      "name": "Members",
+      "description": {
+        "content": "Members of Congress",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e012e2cf-4b27-4e97-a675-df647f6b9ada",
+          "name": "List Members of Congress",
+          "request": {
+            "name": "List Members of Congress",
+            "description": {
+              "content": "Returns a paginated list of all members of Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "currentMember",
+                  "value": "<boolean>",
+                  "description": "Filter for current members only"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDateTime",
+                  "value": "<dateTime>",
+                  "description": "Start date filter for member updates"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDateTime",
+                  "value": "<dateTime>",
+                  "description": "End date filter for member updates"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "425a4947-2f53-4ca0-876a-bc077dc676aa",
+              "name": "A paginated list of members",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "currentMember",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": [\n    {\n      \"bioguideId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"party\": \"string\",\n      \"chamber\": \"string\",\n      \"district\": 1364,\n      \"updateDate\": \"2012-09-15T21:49:11.037Z\",\n      \"url\": \"string\"\n    },\n    {\n      \"bioguideId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"party\": \"string\",\n      \"chamber\": \"string\",\n      \"district\": 694,\n      \"updateDate\": \"1982-09-26T17:00:47.253Z\",\n      \"url\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 461,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd054213-8968-4939-a730-16d75eaf03eb",
+          "name": "Get Member Details",
+          "request": {
+            "name": "Get Member Details",
+            "description": {
+              "content": "Returns detailed information for a specific member of Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "member",
+                ":bioguideId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bioguideId",
+                  "description": "(Required) The Bioguide ID of the member"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "143fedcd-599b-4f8f-9fe6-5eec64075c18",
+              "name": "Detailed member information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member",
+                    ":bioguideId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bioguideId",
+                      "description": "(Required) The Bioguide ID of the member"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"member\": {\n    \"bioguideId\": \"string\",\n    \"name\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"state\": \"string\",\n    \"party\": \"string\",\n    \"birthYear\": \"string\",\n    \"deathYear\": \"string\",\n    \"currentMember\": false,\n    \"terms\": [\n      {\n        \"congress\": 1761,\n        \"chamber\": \"string\",\n        \"memberType\": \"string\",\n        \"startYear\": \"string\",\n        \"endYear\": \"string\",\n        \"stateCode\": \"string\",\n        \"stateName\": \"string\",\n        \"district\": 5775\n      },\n      {\n        \"congress\": 1332,\n        \"chamber\": \"string\",\n        \"memberType\": \"string\",\n        \"startYear\": \"string\",\n        \"endYear\": \"string\",\n        \"stateCode\": \"string\",\n        \"stateName\": \"string\",\n        \"district\": 9173\n      }\n    ],\n    \"officeAddress\": \"string\",\n    \"phoneNumber\": \"string\",\n    \"officialWebsiteUrl\": \"string\",\n    \"sponsoredLegislation\": {},\n    \"cosponsoredLegislation\": {}\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e595406-3ed0-4739-b5f7-fc223685164d",
+              "name": "Member not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member",
+                    ":bioguideId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bioguideId",
+                      "description": "(Required) The Bioguide ID of the member"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc4cfceb-dc52-4066-a32c-db95949c07de",
+          "name": "List Members by Congress",
+          "request": {
+            "name": "List Members by Congress",
+            "description": {
+              "content": "Returns members of a specific Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "member",
+                "congress",
+                ":congress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "currentMember",
+                  "value": "<boolean>",
+                  "description": "Filter for current members only"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a44a54c1-36c8-4d21-a5dd-691134cb731d",
+              "name": "Members of the specified Congress",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member",
+                    "congress",
+                    ":congress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "currentMember",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": [\n    {\n      \"bioguideId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"party\": \"string\",\n      \"chamber\": \"string\",\n      \"district\": 6399,\n      \"updateDate\": \"1961-10-09T05:21:36.310Z\",\n      \"url\": \"string\"\n    },\n    {\n      \"bioguideId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"party\": \"string\",\n      \"chamber\": \"string\",\n      \"district\": 1738,\n      \"updateDate\": \"1984-07-19T19:36:21.809Z\",\n      \"url\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 6403,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2faada78-922b-44b5-ac62-f20dff466038",
+          "name": "Get Member Sponsored Legislation",
+          "request": {
+            "name": "Get Member Sponsored Legislation",
+            "description": {
+              "content": "Returns legislation sponsored by a specific member of Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "member",
+                ":bioguideId",
+                "sponsored-legislation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bioguideId",
+                  "description": "(Required) The Bioguide ID of the member"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e59f6dc-a893-42e8-b3aa-9e66f697b23b",
+              "name": "Legislation sponsored by the member",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member",
+                    ":bioguideId",
+                    "sponsored-legislation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bioguideId",
+                      "description": "(Required) The Bioguide ID of the member"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00489232-f8bd-4f7a-bcca-d404caf9721a",
+          "name": "Get Member Cosponsored Legislation",
+          "request": {
+            "name": "Get Member Cosponsored Legislation",
+            "description": {
+              "content": "Returns legislation cosponsored by a specific member of Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "member",
+                ":bioguideId",
+                "cosponsored-legislation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bioguideId",
+                  "description": "(Required) The Bioguide ID of the member"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a4ea69f1-2041-46ae-aae7-e9a637939b1e",
+              "name": "Legislation cosponsored by the member",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "member",
+                    ":bioguideId",
+                    "cosponsored-legislation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bioguideId",
+                      "description": "(Required) The Bioguide ID of the member"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.congress.gov/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ab1e2b76-653c-41fe-b2a9-a8f24c0f5c89",
+    "name": "Congress.gov Bills Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1583 @@
+{
+  "item": [
+    {
+      "id": "19770fed-9960-4eb2-a6b2-3306c303abcc",
+      "name": "Bills",
+      "description": {
+        "content": "Legislative bills and resolutions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "11c09216-f52f-49ef-9f2a-7f9ebffea96f",
+          "name": "List Bills",
+          "request": {
+            "name": "List Bills",
+            "description": {
+              "content": "Returns a paginated list of congressional bills across all congresses.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDateTime",
+                  "value": "<dateTime>",
+                  "description": "Start date/time filter for bill updates (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDateTime",
+                  "value": "<dateTime>",
+                  "description": "End date/time filter for bill updates (ISO 8601)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "updateDate+desc",
+                  "description": "Sort order for results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3222b6ec-ea67-4e2e-83a2-e4de77069a5d",
+              "name": "A paginated list of bills",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "updateDate+desc"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bills\": [\n    {\n      \"congress\": 4072,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"1976-07-20\",\n      \"latestAction\": {\n        \"actionDate\": \"2007-08-01\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"2013-03-05T04:21:34.406Z\",\n      \"url\": \"string\"\n    },\n    {\n      \"congress\": 6585,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"2025-11-27\",\n      \"latestAction\": {\n        \"actionDate\": \"1999-03-22\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"1976-04-19T11:59:07.200Z\",\n      \"url\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 8572,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b5e2588-23a3-4f97-b4d4-bc12c51512a5",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "updateDate+desc"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a04c0b0c-089e-4302-a8ae-1fc094cbdfcf",
+              "name": "API key missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "updateDate+desc"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9d489522-77ad-4bef-b12a-40bc753e89e2",
+              "name": "Rate limit exceeded (5000 requests per hour)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "updateDate+desc"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1e82fe3-23db-4134-a068-31b3650cedf5",
+          "name": "List Bills by Congress",
+          "request": {
+            "name": "List Bills by Congress",
+            "description": {
+              "content": "Returns bills introduced in a specific Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "billType",
+                  "value": "<string>",
+                  "description": "Filter by bill type"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc46e170-79b6-4525-b1fe-ed7c786c6c3a",
+              "name": "A paginated list of bills for the specified Congress",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "billType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bills\": [\n    {\n      \"congress\": 6533,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"1970-02-04\",\n      \"latestAction\": {\n        \"actionDate\": \"1960-01-03\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"2010-03-13T02:25:44.160Z\",\n      \"url\": \"string\"\n    },\n    {\n      \"congress\": 2673,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"2026-05-08\",\n      \"latestAction\": {\n        \"actionDate\": \"1995-02-16\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"1998-04-11T19:50:08.423Z\",\n      \"url\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 1671,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d729a4cf-f82d-4358-bbf2-f189945bce7c",
+              "name": "Congress not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "billType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb5d390e-cc04-4ab9-8d5c-b8aa4c46e8ca",
+          "name": "List Bills by Congress and Type",
+          "request": {
+            "name": "List Bills by Congress and Type",
+            "description": {
+              "content": "Returns bills of a specific type introduced in a specific Congress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Bill type (e.g., hr, s, hjres)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82389f1a-2950-4634-b8a2-c4a8d27f549b",
+              "name": "A list of bills of the specified type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Bill type (e.g., hr, s, hjres)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bills\": [\n    {\n      \"congress\": 6533,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"1970-02-04\",\n      \"latestAction\": {\n        \"actionDate\": \"1960-01-03\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"2010-03-13T02:25:44.160Z\",\n      \"url\": \"string\"\n    },\n    {\n      \"congress\": 2673,\n      \"type\": \"string\",\n      \"number\": \"string\",\n      \"title\": \"string\",\n      \"originChamber\": \"string\",\n      \"originChamberCode\": \"string\",\n      \"introducedDate\": \"2026-05-08\",\n      \"latestAction\": {\n        \"actionDate\": \"1995-02-16\",\n        \"text\": \"string\"\n      },\n      \"updateDate\": \"1998-04-11T19:50:08.423Z\",\n      \"url\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 1671,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fa3fa20-5fb7-4c70-aae9-040a37845be1",
+          "name": "Get Bill Details",
+          "request": {
+            "name": "Get Bill Details",
+            "description": {
+              "content": "Returns detailed information for a specific bill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type",
+                ":number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Bill type (e.g., hr, s)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) Bill number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "deb30445-e935-4b5b-8731-26bd1fe2a7ce",
+              "name": "Detailed bill information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Bill type (e.g., hr, s)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) Bill number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bill\": {\n    \"congress\": 9106,\n    \"type\": \"string\",\n    \"number\": \"string\",\n    \"title\": \"string\",\n    \"introducedDate\": \"2004-10-22\",\n    \"cosponsors\": {},\n    \"committees\": {},\n    \"actions\": {},\n    \"subjects\": {},\n    \"summaries\": {},\n    \"textVersions\": {}\n  },\n  \"request\": {\n    \"billNumber\": \"string\",\n    \"billType\": \"string\",\n    \"congress\": \"string\",\n    \"contentType\": \"string\",\n    \"format\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e881547-7bb4-4bc1-95a5-931f3a4151f2",
+              "name": "Bill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Bill type (e.g., hr, s)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) Bill number"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b18a7f26-5509-4cf8-a082-f9f3a5aafc07",
+          "name": "Get Bill Actions",
+          "request": {
+            "name": "Get Bill Actions",
+            "description": {
+              "content": "Returns the legislative actions taken on a specific bill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type",
+                ":number",
+                "actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Bill type"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) Bill number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "df8c3697-81b3-417d-83b5-720813e53544",
+              "name": "List of actions on the bill",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Bill type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) Bill number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actions\": [\n    {\n      \"actionDate\": \"1962-12-15\",\n      \"text\": \"string\",\n      \"type\": \"string\",\n      \"actionCode\": \"string\"\n    },\n    {\n      \"actionDate\": \"2008-06-03\",\n      \"text\": \"string\",\n      \"type\": \"string\",\n      \"actionCode\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 752,\n    \"next\": \"string\",\n    \"prev\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02096fb2-714a-458d-8ae4-cca9b6f77306",
+          "name": "Get Bill Cosponsors",
+          "request": {
+            "name": "Get Bill Cosponsors",
+            "description": {
+              "content": "Returns the cosponsors of a specific bill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type",
+                ":number",
+                "cosponsors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results to return per request (max 250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting record number for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "841ce91e-0d79-4156-9606-6f13d063275b",
+              "name": "List of cosponsors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number",
+                    "cosponsors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b5a7a2a-bf44-463c-b291-73ca76e13e65",
+          "name": "Get Bill Summaries",
+          "request": {
+            "name": "Get Bill Summaries",
+            "description": {
+              "content": "Returns summaries for a specific bill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type",
+                ":number",
+                "summaries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f16442ff-9c67-4be9-a099-f5360a85a7ef",
+              "name": "List of summaries for the bill",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number",
+                    "summaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c26c19f-ef29-41cc-a5f6-ed5b02d145ce",
+          "name": "Get Bill Text Versions",
+          "request": {
+            "name": "Get Bill Text Versions",
+            "description": {
+              "content": "Returns the available text versions for a specific bill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bill",
+                ":congress",
+                ":type",
+                ":number",
+                "text"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "API key for authentication"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "congress",
+                  "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "778235dd-0524-451e-8aa3-2f34f2c79cd5",
+              "name": "Available text versions of the bill",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bill",
+                    ":congress",
+                    ":type",
+                    ":number",
+                    "text"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "congress",
+                      "description": "(Required) The Congress number (e.g., 118 for the 118th Congress)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.congress.gov/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "68256726-2b2b-4f58-a15e-691b4362c23c",
+    "name": "Congress.gov Bills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.",
+      "type": "text/plain"
+    }
+  }
+}

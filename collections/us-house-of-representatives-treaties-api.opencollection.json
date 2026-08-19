@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Congress.gov Bills Treaties API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Treaties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Treaties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.congress.gov/v3/treaty",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key for authentication"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per request (max 250)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting record number for pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of treaties submitted to the Senate for ratification."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
