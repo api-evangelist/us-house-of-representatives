@@ -93,6 +93,14 @@ apis:
     url: https://api.congress.gov/
 name: US House of Representatives
 tags:
+  - Federal-Government
+  - Legislation
+  - Congress
+  - Legislative Data
+  - Bills
+  - Members
+  - Committees
+tags_raw:
   - Federal Government
   - Legislation
   - Congress
