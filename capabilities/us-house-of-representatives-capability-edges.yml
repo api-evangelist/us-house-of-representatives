@@ -1,0 +1,27 @@
+slug: us-house-of-representatives
+provider: US House of Representatives
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Public Sector & Government
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Bills
+  spec_file: us-house-of-representatives-bills-api-openapi.yml
+  capability_id: BC-3210.50
+  capability_id_l1: BC-3210
+  capability_name: Legislative Process Coordination
+  confidence: 0.75
+  evidence: GET /bill/{congress}/{type}/{number}/actions  getBillActions  Get Bill Actions; getBillCosponsors  Get
+    Bill Cosponsors; getBillText  Get Bill Text Versions
+  reason: Operations expose bills, their legislative actions, cosponsors, summaries and text versions
+    — the artefacts of the legislative passage process. Sub-capability 'Legislative Process Coordination'
+    fits the action/cosponsor/amendment tracking, though publication of bill text also touches codification,
+    hence moderate confidence on the L2.

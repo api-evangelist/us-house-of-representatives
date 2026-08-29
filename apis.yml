@@ -146,6 +146,9 @@ description: >-
   maintained by the Library of Congress that provides access to bills, members, committees, amendments, nominations, and
   treaties.
 common:
+  - type: CapabilityMap
+    url: capabilities/us-house-of-representatives-capability-edges.yml
+    name: US House of Representatives Business Capability Map
   - type: AgenticAccess
     url: agentic-access/us-house-of-representatives-agentic-access.yml
   - type: VulnerabilityDisclosure
