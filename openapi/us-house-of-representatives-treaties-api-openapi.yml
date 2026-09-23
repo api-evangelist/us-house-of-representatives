@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Congress.gov Bills Treaties API
+  title: Congress.gov Treaties API
   description: The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.
   version: v3
   contact:
@@ -38,6 +38,16 @@ paths:
                 type: object
 components:
   parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
     formatParam:
       name: format
       in: query
@@ -49,16 +59,6 @@ components:
         - json
         - xml
         default: json
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
     offsetParam:
       name: offset
       in: query

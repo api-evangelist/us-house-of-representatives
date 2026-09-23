@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Congress.gov Bills Members API
+  title: Congress.gov Members API
   description: The Congress.gov API provides programmatic access to congressional data from the Library of Congress. It is a REST API offering machine-readable data covering bills, amendments, congressional records, committees, members, nominations, treaties, and other collections. An API key is required for access. Version 3 is the current stable release.
   version: v3
   contact:
@@ -158,7 +158,106 @@ paths:
               schema:
                 type: object
 components:
+  parameters:
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
   schemas:
+    RequestInfo:
+      type: object
+      properties:
+        billNumber:
+          type: string
+        billType:
+          type: string
+        congress:
+          type: string
+        contentType:
+          type: string
+        format:
+          type: string
+    MemberSummary:
+      type: object
+      properties:
+        bioguideId:
+          type: string
+          description: Bioguide ID uniquely identifying the member
+        name:
+          type: string
+          description: Full name of the member
+        state:
+          type: string
+          description: State represented
+        party:
+          type: string
+          description: Party affiliation
+        chamber:
+          type: string
+          description: Current chamber (House or Senate)
+        district:
+          type:
+          - integer
+          - 'null'
+          description: Congressional district (House members only)
+        updateDate:
+          type: string
+          format: date-time
+        url:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
     MemberDetailResponse:
       type: object
       properties:
@@ -180,8 +279,9 @@ components:
             birthYear:
               type: string
             deathYear:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             currentMember:
               type: boolean
             terms:
@@ -228,104 +328,6 @@ components:
           $ref: '#/components/schemas/Pagination'
         request:
           $ref: '#/components/schemas/RequestInfo'
-    MemberSummary:
-      type: object
-      properties:
-        bioguideId:
-          type: string
-          description: Bioguide ID uniquely identifying the member
-        name:
-          type: string
-          description: Full name of the member
-        state:
-          type: string
-          description: State represented
-        party:
-          type: string
-          description: Party affiliation
-        chamber:
-          type: string
-          description: Current chamber (House or Senate)
-        district:
-          type: integer
-          nullable: true
-          description: Congressional district (House members only)
-        updateDate:
-          type: string
-          format: date-time
-        url:
-          type: string
-    RequestInfo:
-      type: object
-      properties:
-        billNumber:
-          type: string
-        billType:
-          type: string
-        congress:
-          type: string
-        contentType:
-          type: string
-        format:
-          type: string
-    Pagination:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of records matching the query
-        next:
-          type: string
-          description: URL for the next page of results
-        prev:
-          type: string
-          description: URL for the previous page of results
-  parameters:
-    congressParam:
-      name: congress
-      in: path
-      description: The Congress number (e.g., 118 for the 118th Congress)
-      required: true
-      schema:
-        type: integer
-        minimum: 1
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
-    formatParam:
-      name: format
-      in: query
-      description: Response format
-      required: false
-      schema:
-        type: string
-        enum:
-        - json
-        - xml
-        default: json
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
