@@ -137,52 +137,6 @@ paths:
               schema:
                 type: object
 components:
-  parameters:
-    congressParam:
-      name: congress
-      in: path
-      description: The Congress number (e.g., 118 for the 118th Congress)
-      required: true
-      schema:
-        type: integer
-        minimum: 1
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    formatParam:
-      name: format
-      in: query
-      description: Response format
-      required: false
-      schema:
-        type: string
-        enum:
-        - json
-        - xml
-        default: json
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
   schemas:
     Pagination:
       type: object
@@ -244,6 +198,52 @@ components:
           description: Type of committee
         url:
           type: string
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
+      schema:
+        type: integer
+        minimum: 1
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

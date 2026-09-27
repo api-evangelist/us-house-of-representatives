@@ -289,53 +289,30 @@ paths:
               schema:
                 type: object
 components:
-  parameters:
-    congressParam:
-      name: congress
-      in: path
-      description: The Congress number (e.g., 118 for the 118th Congress)
-      required: true
-      schema:
-        type: integer
-        minimum: 1
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    formatParam:
-      name: format
-      in: query
-      description: Response format
-      required: false
-      schema:
-        type: string
-        enum:
-        - json
-        - xml
-        default: json
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
   schemas:
+    BillListResponse:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
     RequestInfo:
       type: object
       properties:
@@ -349,29 +326,6 @@ components:
           type: string
         format:
           type: string
-    Pagination:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of records matching the query
-        next:
-          type: string
-          description: URL for the next page of results
-        prev:
-          type: string
-          description: URL for the previous page of results
-    BillListResponse:
-      type: object
-      properties:
-        bills:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillSummary'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        request:
-          $ref: '#/components/schemas/RequestInfo'
     BillDetailResponse:
       type: object
       properties:
@@ -407,6 +361,29 @@ components:
               type: object
         request:
           $ref: '#/components/schemas/RequestInfo'
+    BillActionsResponse:
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            type: object
+            properties:
+              actionDate:
+                type: string
+                format: date
+              text:
+                type: string
+              type:
+                type: string
+              actionCode:
+                type: string
+              committees:
+                type: array
+                items:
+                  type: object
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     BillSummary:
       type: object
       properties:
@@ -446,34 +423,57 @@ components:
         url:
           type: string
           description: API URL for the bill details
-    BillActionsResponse:
-      type: object
-      properties:
-        actions:
-          type: array
-          items:
-            type: object
-            properties:
-              actionDate:
-                type: string
-                format: date
-              text:
-                type: string
-              type:
-                type: string
-              actionCode:
-                type: string
-              committees:
-                type: array
-                items:
-                  type: object
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+    formatParam:
+      name: format
+      in: query
+      description: Response format
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        default: json
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
+      schema:
+        type: integer
+        minimum: 1
   responses:
-    Unauthorized:
-      description: API key missing or invalid
     RateLimitExceeded:
       description: Rate limit exceeded (5000 requests per hour)
+    Unauthorized:
+      description: API key missing or invalid
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

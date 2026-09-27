@@ -59,6 +59,13 @@ components:
         - json
         - xml
         default: json
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
     offsetParam:
       name: offset
       in: query
@@ -68,13 +75,6 @@ components:
         type: integer
         minimum: 0
         default: 0
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

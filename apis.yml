@@ -93,7 +93,7 @@ apis:
     url: https://api.congress.gov/
 name: US House of Representatives
 tags:
-  - Federal-Government
+  - Federal Government
   - Legislation
   - Congress
   - Legislative Data
@@ -108,17 +108,22 @@ tags_raw:
   - Bills
   - Members
   - Committees
+  - Federal-Government
 kind: contract
 deliveryModel:
   model: unknown
-  open_source: false
+  license_evidence:
+    not_product:
+    - libraryofcongress/api.congress.gov
+  open_source: unknown
   commercial: false
   callable_host: true
   label: Delivery model not determined — needs a product licence on record
   confidence: low
   source:
   - openapi
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
