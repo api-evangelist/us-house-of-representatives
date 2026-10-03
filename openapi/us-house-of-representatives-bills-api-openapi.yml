@@ -290,42 +290,6 @@ paths:
                 type: object
 components:
   schemas:
-    BillListResponse:
-      type: object
-      properties:
-        bills:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillSummary'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        request:
-          $ref: '#/components/schemas/RequestInfo'
-    Pagination:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of records matching the query
-        next:
-          type: string
-          description: URL for the next page of results
-        prev:
-          type: string
-          description: URL for the previous page of results
-    RequestInfo:
-      type: object
-      properties:
-        billNumber:
-          type: string
-        billType:
-          type: string
-        congress:
-          type: string
-        contentType:
-          type: string
-        format:
-          type: string
     BillDetailResponse:
       type: object
       properties:
@@ -361,6 +325,18 @@ components:
               type: object
         request:
           $ref: '#/components/schemas/RequestInfo'
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
     BillActionsResponse:
       type: object
       properties:
@@ -423,23 +399,39 @@ components:
         url:
           type: string
           description: API URL for the bill details
+    RequestInfo:
+      type: object
+      properties:
+        billNumber:
+          type: string
+        billType:
+          type: string
+        congress:
+          type: string
+        contentType:
+          type: string
+        format:
+          type: string
+    BillListResponse:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        request:
+          $ref: '#/components/schemas/RequestInfo'
   parameters:
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
       schema:
         type: integer
-        minimum: 0
-        default: 0
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
+        minimum: 1
     formatParam:
       name: format
       in: query
@@ -461,14 +453,22 @@ components:
         minimum: 1
         maximum: 250
         default: 20
-    congressParam:
-      name: congress
-      in: path
-      description: The Congress number (e.g., 118 for the 118th Congress)
-      required: true
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
       schema:
         type: integer
-        minimum: 1
+        minimum: 0
+        default: 0
   responses:
     RateLimitExceeded:
       description: Rate limit exceeded (5000 requests per hour)
