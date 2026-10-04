@@ -138,15 +138,6 @@ paths:
                 type: object
 components:
   schemas:
-    CommitteeListResponse:
-      type: object
-      properties:
-        committees:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommitteeSummary'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     Pagination:
       type: object
       properties:
@@ -159,6 +150,15 @@ components:
         prev:
           type: string
           description: URL for the previous page of results
+    CommitteeListResponse:
+      type: object
+      properties:
+        committees:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitteeSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     CommitteeSummary:
       type: object
       properties:
@@ -199,14 +199,32 @@ components:
             billsCount:
               type: integer
   parameters:
-    congressParam:
-      name: congress
-      in: path
-      description: The Congress number (e.g., 118 for the 118th Congress)
-      required: true
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
       schema:
         type: integer
         minimum: 1
+        maximum: 250
+        default: 20
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
     formatParam:
       name: format
       in: query
@@ -218,32 +236,14 @@ components:
         - json
         - xml
         default: json
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
+    congressParam:
+      name: congress
+      in: path
+      description: The Congress number (e.g., 118 for the 118th Congress)
+      required: true
       schema:
         type: integer
         minimum: 1
-        maximum: 250
-        default: 20
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

@@ -38,6 +38,25 @@ paths:
                 type: object
 components:
   parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
+    offsetParam:
+      name: offset
+      in: query
+      description: Starting record number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
     formatParam:
       name: format
       in: query
@@ -49,16 +68,6 @@ components:
         - json
         - xml
         default: json
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
     apiKeyParam:
       name: api_key
       in: query
@@ -66,15 +75,6 @@ components:
       required: false
       schema:
         type: string
-    offsetParam:
-      name: offset
-      in: query
-      description: Starting record number for pagination
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
