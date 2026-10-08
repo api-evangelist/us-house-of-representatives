@@ -152,6 +152,12 @@ description: >-
   maintained by the Library of Congress that provides access to bills, members, committees, amendments, nominations, and
   treaties.
 common:
+  - type: Plans
+    url: plans/us-house-of-representatives-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/us-house-of-representatives-rate-limits.yml
+  - type: FinOps
+    url: finops/us-house-of-representatives-finops.yml
   - type: CapabilityMap
     url: capabilities/us-house-of-representatives-capability-edges.yml
     name: US House of Representatives Business Capability Map
