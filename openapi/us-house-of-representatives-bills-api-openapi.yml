@@ -290,77 +290,6 @@ paths:
                 type: object
 components:
   schemas:
-    Pagination:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of records matching the query
-        next:
-          type: string
-          description: URL for the next page of results
-        prev:
-          type: string
-          description: URL for the previous page of results
-    RequestInfo:
-      type: object
-      properties:
-        billNumber:
-          type: string
-        billType:
-          type: string
-        congress:
-          type: string
-        contentType:
-          type: string
-        format:
-          type: string
-    BillDetailResponse:
-      type: object
-      properties:
-        bill:
-          type: object
-          properties:
-            congress:
-              type: integer
-            type:
-              type: string
-            number:
-              type: string
-            title:
-              type: string
-            introducedDate:
-              type: string
-              format: date
-            sponsors:
-              type: array
-              items:
-                type: object
-            cosponsors:
-              type: object
-            committees:
-              type: object
-            actions:
-              type: object
-            subjects:
-              type: object
-            summaries:
-              type: object
-            textVersions:
-              type: object
-        request:
-          $ref: '#/components/schemas/RequestInfo'
-    BillListResponse:
-      type: object
-      properties:
-        bills:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillSummary'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        request:
-          $ref: '#/components/schemas/RequestInfo'
     BillSummary:
       type: object
       properties:
@@ -400,6 +329,17 @@ components:
         url:
           type: string
           description: API URL for the bill details
+    BillListResponse:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        request:
+          $ref: '#/components/schemas/RequestInfo'
     BillActionsResponse:
       type: object
       properties:
@@ -423,17 +363,72 @@ components:
                   type: object
         pagination:
           $ref: '#/components/schemas/Pagination'
+    BillDetailResponse:
+      type: object
+      properties:
+        bill:
+          type: object
+          properties:
+            congress:
+              type: integer
+            type:
+              type: string
+            number:
+              type: string
+            title:
+              type: string
+            introducedDate:
+              type: string
+              format: date
+            sponsors:
+              type: array
+              items:
+                type: object
+            cosponsors:
+              type: object
+            committees:
+              type: object
+            actions:
+              type: object
+            subjects:
+              type: object
+            summaries:
+              type: object
+            textVersions:
+              type: object
+        request:
+          $ref: '#/components/schemas/RequestInfo'
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of records matching the query
+        next:
+          type: string
+          description: URL for the next page of results
+        prev:
+          type: string
+          description: URL for the previous page of results
+    RequestInfo:
+      type: object
+      properties:
+        billNumber:
+          type: string
+        billType:
+          type: string
+        congress:
+          type: string
+        contentType:
+          type: string
+        format:
+          type: string
+  responses:
+    RateLimitExceeded:
+      description: Rate limit exceeded (5000 requests per hour)
+    Unauthorized:
+      description: API key missing or invalid
   parameters:
-    limitParam:
-      name: limit
-      in: query
-      description: Number of results to return per request (max 250)
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 250
-        default: 20
     offsetParam:
       name: offset
       in: query
@@ -443,13 +438,6 @@ components:
         type: integer
         minimum: 0
         default: 0
-    apiKeyParam:
-      name: api_key
-      in: query
-      description: API key for authentication
-      required: false
-      schema:
-        type: string
     formatParam:
       name: format
       in: query
@@ -469,11 +457,23 @@ components:
       schema:
         type: integer
         minimum: 1
-  responses:
-    Unauthorized:
-      description: API key missing or invalid
-    RateLimitExceeded:
-      description: Rate limit exceeded (5000 requests per hour)
+    apiKeyParam:
+      name: api_key
+      in: query
+      description: API key for authentication
+      required: false
+      schema:
+        type: string
+    limitParam:
+      name: limit
+      in: query
+      description: Number of results to return per request (max 250)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 250
+        default: 20
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
